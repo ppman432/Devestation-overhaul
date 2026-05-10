@@ -1,0 +1,341 @@
+﻿l_english:
+
+ # Decisions
+ devastation_decisions: "Mitigating Devastation"
+ devastation_decisions_desc: "Mitigating the devastation of states is essential for both wartime resilience and long-term peace. During war, reducing devastation helps maintain national stability, protect civilian morale, and ensure critical infrastructure remains functional. In times of peace, addressing devastation is vital for economic recovery, population well-being, and preventing future instability, allowing the nation to thrive and rebuild more effectively."
+ 
+ devastation_emergency_repairs: "Emergency Repairs"
+ devastation_emergency_repairs_desc: "Dispatch repair teams to restore essential infrastructure, such as roads, bridges, and power lines, to keep the war effort moving."
+ devastation_evacuation_orders: "Evacuation Orders"
+ devastation_evacuation_orders_desc: "Implement large-scale evacuation of civilians from heavily bombed or shelled areas to minimize casualties and maintain morale."
+ devastation_rapid_response_teams: "Rapid Response Teams"
+ devastation_rapid_response_teams_desc: "Deploy rapid response teams to contain and control damage immediately after enemy strikes, focusing on fire control, medical aid, and emergency engineering."
+ devastation_national_infrastructure_investment: "National Infrastructure Reinvestment"
+ devastation_national_infrastructure_investment_desc: "Invest in rebuilding critical infrastructure to restore transportation networks and public utilities across devastated states."
+ devastation_relief_fund_allocation: "Relief Fund Allocation"
+ devastation_relief_fund_allocation_desc: "Allocate funds to provide immediate relief and resources for the most affected regions."
+ devastation_public_works_initiative: "Public Works Initiative"
+ devastation_public_works_initiative_desc: "Launch a large-scale public works program focused on employing the unemployed to rebuild devastated areas."
+ devastation_funding_allies: "Funding §Y[FROM.GetAdjective]§! Repairs"
+ devastation_funding_allies_desc: "Send aid to our [FROM.GetAdjective] allies in order to fix the devastations on their states."
+ devastation_funding_allies_tt: "§RThere are no [FROM.GetAdjective] devastated states!§!"
+ devastation_funding_allies_cancel_trigger: "Opinion of [FROM.GetFlag] §Y[FROM.GetNameDefCap]§! is lower than §Y50§! and is not an ally of [ROOT.GetFlag] §Y[ROOT.GetNameDefCap]§!"
+ 
+ 
+ assimilation_decisions: "Displaced Populations"
+ assimilation_decisions_desc: "As devastation spreads across the land, §Ypopulations§! are uprooted from their homes and livelihoods. These §Ydisplaced civilians§!, whether fleeing destruction within our borders or arriving from abroad, are grouped under our §OUnassimilated Population§! pool.\n\nThese populations are not yet fully reintegrated into the economic and administrative structure of the state. Over time, we may §Greintegrate§! them into our core population through natural recovery or targeted political efforts. Alternatively, if the burden becomes too great, we may choose to §Rforcibly expel§! them beyond our borders...\n\nCurrently, we have a total §OUnassimilated Population§! of §R[?country_unassimilated_pops|2]K§!, representing §Y[CountryUnassimilatedPopsRatio]§! of our §Ccore population§! of §C[?country_core_population_controlled]K§!.\n\nFor every §Y0.1%§! of this ratio, we suffer a debuff of §R[?global.unassimilated_stability_factor]%§! to §YStability§!. At present, this results in a total penalty of [?country_unassimilated_pops_modifier^0|+2%] §YStability Factor§!.\n\nSince the start of the game, a total of §Y[?total_external_refugees_in_game|2]K§! §Ointernally & externally displaced civilians§! have been registered inside our nation, of whom §G[?total_external_refugees_assimilated_in_game|2]K§! were §Greintegrated§! and §R[?total_external_refugees_expelled_in_game|2]K§! were §Rforcibly expelled§!.\n\nIf you are at peace and neighboring nations at war, it's very likely that you have external refugees & if you're at war and losing ground/being actively bombed, its more than likely that you have internal refugees."
+
+ assimilation_passive_decision: "Passive Population Reintegration"
+ assimilation_passive_decision_desc: "Over time, displaced and unassimilated populations will gradually reintegrate into society as housing is restored and administrative order returns."
+ assimilation_passive_decision_tt: "A random amount of §OUnassimilated Pops§! between §Y[?assimilate_unassimilated_pops_min|0%]§! and §Y[?assimilate_unassimilated_pops_max|0%]§! in every state with §OUnassimilated Pops§! will be §Greintegrated§!.\n\n"
+
+ assimilation_nationwide_drive_decision: "Nationwide Reintegration Drive"
+ assimilation_nationwide_drive_decision_desc: "Launch a coordinated national effort to reintegrate displaced and unassimilated populations across all controlled states."
+ assimilation_nationwide_drive_decision_tt: "A random amount of §OUnassimilated Pops§! between §Y[?assimilate_unassimilated_pops_min|0%]§! and §Y[?assimilate_unassimilated_pops_max|0%]§! in every state with §OUnassimilated Pops§! will be §Greintegrated§!.\n\n"
+
+ assimilation_expel_decision: "Forced Population Expulsion"
+ assimilation_expel_decision_desc: "Purge the state apparatus of displaced populations by forcibly expelling unassimilated civilians beyond our borders."
+ assimilation_expel_decision_tt: "A random amount of §OUnassimilated Pops§! between §Y[?assimilate_expel_pops_min|0%]§! and §Y[?assimilate_expel_pops_max|0%]§! in every state with §OUnassimilated Pops§! will be §Rexpelled§!.\n\n"
+
+ 
+ 
+ decision_cost_CP_10: "£command_power  §Y20§!"
+ decision_cost_CP_10_blocked: "£command_power  §R20§!"
+ decision_cost_CP_10_tooltip:0 "It costs £command_power  §Y20§! to take the decision"
+ decision_cost_civ_factory_5_PP_150:1 "£civ_factory  §Y10  £pol_power 150§!"
+ decision_cost_civ_factory_5_PP_150_blocked:1 "£civ_factory  §R10  £pol_power 150§!"
+ decision_cost_civ_factory_5_PP_150_tooltip:1 "It costs £civ_factory  §Y10  £pol_power 150§! while this decision is active"
+ decision_cost_civ_factory_5_PP_20:1 "£civ_factory  §Y10  £pol_power 50§!"
+ decision_cost_civ_factory_5_PP_20_blocked:1 "£civ_factory  §R5  £pol_power 50§!"
+ decision_cost_civ_factory_5_PP_20_tooltip:1 "It costs £civ_factory  §Y10  £pol_power 50§! while this decision is active"
+ decision_cost_civ_factory_3_PP_100:1 "£civ_factory  §Y5  £pol_power 100§!"
+ decision_cost_civ_factory_3_PP_100_blocked:1 "£civ_factory  §R5  £pol_power 100§!"
+ decision_cost_civ_factory_3_PP_100_tooltip:1 "It costs £civ_factory  §Y5  £pol_power 100§! while this decision is active"
+ 
+ # Dynamic Modifiers
+ state_devastation_modifier: "State Devastation"
+ country_devastation_modifier: "National Devastation"
+ country_devastation_modifier_tt: "Current Value: §Y[?country_devastation_value]§!\n\n"
+ country_devastation_modifier_tt_2: "Base Stability from refugees: §Y[?country_refugee_stability_weekly|=+3%%]§!"
+ modifier_state_repair_speed_infrastructure_factor: "Infrastructure Repair Speed"
+ modifier_state_repair_speed_industrial_complex_factor: "Civilian Factory Repair Speed"
+ modifier_state_repair_speed_arms_factory_factor: "Military Factory Repair Speed"
+ country_unassimilated_pops_modifier: "Unassimilated Pops"
+ 
+ # GUI
+ devastation_progress_tt: "§YState Devastation§! ([?FROM.state_devastation_value|-3])\n\nLocal Supplies: [?FROM.state_devastation_modifier^0|+%]\nLocal Factory Efficiency: [?FROM.state_devastation_modifier^1|+%]\nLocal Available Resources: [?FROM.state_devastation_modifier^3|+%]\nLocal Construction Speed: [?FROM.state_devastation_modifier^0|+%]\nLocal Repair Speed: [?FROM.state_devastation_modifier^4|+%]\nLocal Building Slots: [?FROM.state_devastation_modifier^2|+%]\nLocal Division Speed: [?FROM.state_devastation_modifier^6|+%]\nLocal Organizaion Regain: [?FROM.state_devastation_modifier^7|+%]\nLocal Max Entrenchment: [?FROM.state_devastation_modifier^8|-%]\nLocal Recruitable Population: [?FROM.state_devastation_modifier^9|+%]\nLocal Non-Core Manpower: [?FROM.state_devastation_modifier^10|+%]\nResistance Growth Speed: [?FROM.state_devastation_modifier^11|-%]\nCompliance Growth Speed: [?FROM.state_devastation_modifier^12|+%]"
+ devastation_progress_tt_delayed: "Value changed by (§Y[?FROM.state_devastation_value_change|=3]§!) and \nit went from [?FROM.state_devastation_previous_value|-3] to [?FROM.state_devastation_value|-3]\n\n§YCurrently affected by: §![SDFactors1][SDFactors2][SDFactors3][SDFactors4][SDFactors5][SDFactors6][SDFactors7][SDFactors10][SDFactors11][SDFactors0]\n\n§YMigrating Factories§!\n     £industry_texticon §YTotal§! Factory §RLost§!: [?FROM.devastation_state_factory_lost|-0]\n     £industry_texticon §YTotal§! Factory §GGain§!: [?FROM.devastation_state_factory_gain|+0]\n     £industry_texticon §YEffective Gain§!: [?FROM.devastation_state_factory_effective_gain|=+0]\n\n     £civ_factory  Civilian Factory §RLost§!: [?FROM.devastation_state_civ_lost|-0]\n     £civ_factory  Civilian Factory §GGain§!: [?FROM.devastation_state_civ_gain|+0]\n     £civ_factory  §YEffective Gain§!: [?FROM.devastation_state_civ_effective_gain|=+0]\n\n     £mil_factory  Military Factory §RLost§!: [?FROM.devastation_state_mil_lost|-0]\n     £mil_factory  Military Factory §GGain§!: [?FROM.devastation_state_mil_gain|+0]\n     £mil_factory  §YEffective Gain§!: [?FROM.devastation_state_mil_effective_gain|=+0]\n--------------\n§YTotal Population Change: §![?FROM.devastation_state_pop_change|+2][StatePopChange1]\n\n§YCivilian Lost§!\n     Refugees: [?FROM.devastation_state_refugee_lost|-2][StatePopChange2]\n     Casualties: [?FROM.devastation_state_casualties|-2][StatePopChange3]\n\n§YCivilian Gain§!\n     Refugees from neighboring states: [?FROM.devastation_state_refugee_gain|+2][StatePopChange4]\n--------------\n§YUnassimilated Population: §![?FROM.devastation_unassimilated_pops|-2][StatePopChange5]\n--------------\n§YState Control Changed Amount: [?FROM.state_control_changed_count|0]§!"
+ casualties_bg_tt: "§YMilitary Casualties:§! §R[GetMilCasualtiesPlaceValue]§!\n§YCivilian Casualties:§! §R[GetCivCasualtiesPlaceValue]§!"
+ casualties_bg_tt_delayed: "Click to see list of countries."
+ text_K: "§RK§!"
+ text_K_Y: "§YK§!"
+ text_K_G: "§GK§!"
+ text_M: "§RM§!"
+ text_M_G: "§GM§!"
+ casualties_text: "[GetCasualtiesPlaceValue]"
+ casualties_thousand: "§R[?total_casualties_k|2] K§!"
+ casualties_million: "§R[?total_casualties_m|2] M§!"
+ mil_casualties_thousand: "§R[?persistent_mil_casualties_k|2] K§!"
+ mil_casualties_million: "§R[?persistent_mil_casualties_m|2] M§!"
+ civ_casualties_thousand: "§R[?civ_casualties_k|2] K§!"
+ civ_casualties_million: "§R[?civ_casualties_m|2] M§!"
+ casualty_flag_tt: "§Y[?casualty_value.GetName]§!"
+ casualties_text_tt: "Total Casualties for the §Y[?casualty_value.GetName]§!: [GetCasualtiesPlaceValue]"
+ mil_casualty_tt: "Military Casualties for the §Y[?casualty_value.GetName]§!: [GetMilCasualtiesPlaceValue]"
+ civ_casualty_tt: "Civilian Casualties for the §Y[?casualty_value.GetName]§!: [GetCivCasualtiesPlaceValue]"
+ 
+ SDFactors0Key1: "\n     Devastation Saturation Factor: §G-3.00%§!"
+ SDFactors0Key2: "\n     Devastation Saturation Factor: §G-12.00%§!"
+ SDFactors0Key3: "\n     Devastation Saturation Factor: §G-28.00%§!"
+ 
+ SDFactors0Key4: "\n     Devastation Saturation Factor: §G-45.00%§!"
+ SDFactors0Key5: "\n     Devastation Saturation Factor: §G-62.00%§!"
+ SDFactors0Key6: "\n     Devastation Saturation Factor: §G-75.00%§!"
+ 
+ SDFactors0Key7: "\n     Devastation Saturation Factor: §G-86.00%§!"
+ SDFactors0Key8: "\n     Devastation Saturation Factor: §G-93.00%§!"
+ 
+ SDFactors1Key: "\n     Has Resistance: §R[?FROM.state_devastation_base_gain_resistance|-=3]§!"
+ SDFactors2Key: "\n     Collapsed State Control: §R+0.3§!"
+ SDFactors3Key: "\n     Heavy Combat Zone: §R+1.75§!"
+ SDFactors4Key: "\n     Frontline State/Skirmishes: §R+0.25§!"
+ SDFactors5Key: "\n     Recently Experienced Bombing Runs: §R+1.5§!"
+ SDFactors6Key: "\n     Solidified State Control: §G-0.075§!"
+ SDFactors7Key: "\n     At Peace: §G-0.15§!"
+#SDFactors8Key: "\n     Decisions Reduction: [FROM.controller.GetName] [?FROM.controller.modifier@state_devastation_reduction|-=3]"
+#SDFactors9Key: "\n     Decisions Reduction Factor: [?FROM.controller.modifier@state_devastation_reduction_factor|-=3%]"
+ SDFactors10Key: "\n     State Under Siege: §R+1.25§!"
+ 
+ 
+ SDFactors11Key0: "\n     §YUndeveloped Area§! \n     Devastation Multiplier: §G-90%§!"
+ SDFactors11Key1: "\n     §YPeripheral Pastoral Area§! \n     Devastation Multiplier: §G-70%§!"
+ SDFactors11Key2: "\n     §YRural Area§! \n     Devastation Multiplier: §G-50%§!"
+ SDFactors11Key3: "\n     §YDeveloped Rural Area§! \n     Devastation Multiplier: §G-25%§!"
+ SDFactors11Key4: "\n     §YSuburban Area§! \n     Devastation Multiplier: §G-10%§!"
+ SDFactors11Key5: "\n     §YUrbanised Area§! \n     Devastation Multiplier: §G+0%§!"
+ SDFactors11Key6: "\n     §YIndustrial Urban Area§! \n     Devastation Multiplier: §Y+10%§!"
+ SDFactors11Key7: "\n     §YMajor Metropolitan Area§! \n     Devastation Multiplier: §R+25%§!"
+ SDFactors11Key8: "\n     §YPrime Megalopolis Area§! \n     Devastation Multiplier: §R+50%§!"
+ 
+ # Effects
+ devastation_state_change_value_tt: "Change §YState Devastation§! by [?temp|-]"
+ assimilate_unassimilated_pops_tt: "Approximately §G[?country_temp]§! §OUnassimilated Pops§! will be §Gassimilated§! across the country."
+ assimilate_expel_pops_tt: "Approximately §G[?country_temp]§! §OUnassimilated Pops§! will be §Rexpelled§! across the country."
+ assimilate_expel_pops_tt2: "Unassimilated Population: §G-[?pops_to_be_expelled]§!"
+ 
+ # Triggers
+ has_state_devastation_tt: "Has §YState Devastation§!"
+ neighbor_state_has_direct_war_tt: "Neighboring an enemy §Ystate§!"
+ controller_has_war_with_owner_tt: "Is an occupied §Ystate§!"
+ state_isnt_fully_controlled_owner_tt: "Has ongoing fighting in §Ystate§!"
+ state_is_fully_controlled_owner_tt: "Is fully controlled"
+ controller_at_peace_tt: "Controller is at peace"
+ has_unassimilated_pops_tt: "Has unassimilated pops"
+ less_than_unassimilated_stability_hit_tt: "Stability Factor from §OUnassimilated Pops§! is §R[?temp|%] or worse§!."
+ 
+ # Defined Modifiers
+ state_devastation_reduction_weekly: "Weekly State Devastation Reduction"
+ state_devastation_reduction: "Devastation Reduction in every state"
+ state_devastation_reduction_factor: "Devastation Reduction factor in every state"
+ country_weekly_stability_refugees: "Weekly Stability Gain from refugees"
+ 
+ # Events
+ devastation_event.t: "Migration from [FROM.FROM.GetName]"
+ devastation_event.d: "Migration chance is [?global.migration_chance_test|%%]"
+ 
+ # Map Mode
+ MAPMODE_DEVASTATION_MAP_MODE: "Devastation"
+ MAPMODE_DEVASTATION_MAP_MODE_NAME: "Devastation"
+ MAPMODE_DEVASTATION_MAP_MODE_DESC: "Show the amount of devastation in each state."
+ devastation_map_mode_tooltip: "§YState Devastation§! ([?FROM.state_devastation_value|-3])"
+ devastation_map_mode_tooltip_delayed: "Local Supplies: [?FROM.state_devastation_modifier^0|+%]\nLocal Factory Efficiency: [?FROM.state_devastation_modifier^1|+%]\nLocal Available Resources: [?FROM.state_devastation_modifier^3|+%]\nLocal Construction Speed: [?FROM.state_devastation_modifier^0|+%]\nLocal Repair Speed: [?FROM.state_devastation_modifier^4|+%]\nLocal Building Slots: [?FROM.state_devastation_modifier^2|+%]\nLocal Division Speed: [?FROM.state_devastation_modifier^6|+%]\nLocal Organizaion Regain: [?FROM.state_devastation_modifier^7|+%]\nLocal Max Entrenchment: [?FROM.state_devastation_modifier^8|-%]\nLocal Recruitable Population: [?FROM.state_devastation_modifier^9|+%]\nLocal Non-Core Manpower: [?FROM.state_devastation_modifier^10|+%]\nResistance Growth Speed: [?FROM.state_devastation_modifier^11|-%]\nCompliance Growth Speed: [?FROM.state_devastation_modifier^12|+%]\n$SEPARATION_LINE$§YTotal Population Change: §![?FROM.devastation_state_pop_change|+2][StatePopChange1]\n\n§YCivilian Lost§!\n     Refugees: [?FROM.devastation_state_refugee_lost|-2][StatePopChange2]\n     Casualties: [?FROM.devastation_state_casualties|-2][StatePopChange3]\n\n§YCivilian Gain§!\n     Refugees from neighboring states: [?FROM.devastation_state_refugee_gain|+2][StatePopChange4]\n$SEPARATION_LINE$§YUnassimilated Population: §![?FROM.devastation_unassimilated_pops|-2][StatePopChange5]\n$SEPARATION_LINE$Value changed from [?FROM.state_devastation_previous_value|-3] to [?FROM.state_devastation_value|-3]"
+ 
+ 
+ #####################
+ # RAID CATEGORY
+ #####################
+ raid_category_devastation_strategic_bombing_category: "Area Bombing Raids"
+ tooltip_raid_category_devastation_strategic_bombing_category: "§HMassive Aerial Bombing Raids§! \nMassive bombing operations designed to devastate enemy cities and industry."
+ raid_category_header_devastation_strategic_bombing_category: "Area Bombing Raids"
+ #####################
+ # MASSIVE CARPET BOMBING
+ #####################
+ raid_type_devastation_massive_carpet_bombing: "Mass Bombing raid"
+ raid_type_devastation_massive_carpet_bombing_desc: "Launch hundreds of strategic bombers to devastate an enemy province, with incendiary and/or high-explosive bombs being present. This operation carries significant risk but can cause catastrophic damage to enemy infrastructure, industry, and civilian morale.\n\n§YRequires:§! 100 Strategic Bombers\n§YRisk Level:§! High\n§YDevastation Potential:§! High to Very High"
+ 
+ raid_category_devastation_strategic_bombing_category: "Area Bombing raids"
+ 
+ devastation_massive_carpet_bombing_target: "Target: $LOCATION$"
+ 
+ # Actor tooltips (your country)
+ devastation_massive_carpet_bombing_disaster_actor_tt: "§RDisastrous Raid§!\nOur bomber fleet was decimated by enemy defenses. Heavy losses for minimal effect. Public morale damaged."
+ devastation_massive_carpet_bombing_limited_actor_tt: "§YPartial Success§!\nThe raid encountered heavy resistance but achieved some objectives. Moderate bomber losses."
+ devastation_massive_carpet_bombing_success_actor_tt: "§GSuccessful Raid§!\nOur bombers devastated the target area. Enemy infrastructure severely damaged with acceptable losses."
+ devastation_massive_carpet_bombing_critical_actor_tt: "§G§HFirestorm Achieved§!§!\nA perfect raid! Massive devastation with minimal losses. Enemy production capabilities crippled."
+ devastation_massive_carpet_bombing_initiated_tt: "Massive carpet bombing raid preparation initiated. Our bombers will strike in §Y7 days§!."
+ 
+ # Victim tooltips (enemy country)
+ devastation_massive_carpet_bombing_disaster_victim_tt: "§GOur defenses held!§!\nEnemy bombers driven off with heavy losses. Minimal damage sustained. Public morale boosted."
+ devastation_massive_carpet_bombing_limited_victim_tt: "§YEnemy bombing raid§!\nOur state suffered moderate damage from enemy bombing. Some infrastructure and factories destroyed. Civilian casualties reported."
+ devastation_massive_carpet_bombing_success_victim_tt: "§RDevastating attack!§!\nEnemy bombers caused severe damage to our infrastructure and industry. Heavy civilian casualties. National morale shaken."
+ devastation_massive_carpet_bombing_critical_victim_tt: "§R§HFirestorm catastrophe§!§!\nAn apocalyptic bombing raid has devastated the region. Massive civilian casualties. Infrastructure completely destroyed. Production across the nation disrupted. This will be remembered as one of the darkest days of the war."
+ 
+ 
+ #####################
+ # IDEA FOR CRITICAL SUCCESS DISRUPTION
+ #####################
+ devastation_strategic_bombing_disruption: "Strategic Bombing Disruption"
+ devastation_strategic_bombing_disruption_desc: "A catastrophic bombing raid has disrupted production networks across the nation. Supply chains broken, workers demoralized, and infrastructure damage is hampering all industrial output."
+ devastation_strategic_bombing_disruption_2: "Compounding Strategic Bombing Disruption"
+ devastation_strategic_bombing_disruption_2_desc: "Multiple devastating bombing raids have compounded, causing a complete breakdown of industrial coordination. The effects are cascading through the economy."
+
+ LART_UNASSIMILATED_POPS_TEXT: "[?country_unassimilated_pops_ratio_core|1%]"
+
+
+ # =====================================================================
+ # OPINION MODIFIERS
+ # =====================================================================
+ bm_conduct_aggressive_opinion: "Aggressive Warfare Conduct"
+ bm_conduct_aggressive_opinion_desc: "Reports of civilian casualties have reached the international community. This nation's conduct of war is being condemned."
+ bm_conduct_total_war_opinion: "Total War Atrocities"
+ bm_conduct_total_war_opinion_desc: "Documented atrocities and deliberate targeting of civilian populations have provoked widespread international outrage."
+
+ # =====================================================================
+ # DYNAMIC MODIFIER NAMES
+ # =====================================================================
+ modifier_bm_conduct_restrained_modifier: "Restrained Conduct"
+ modifier_bm_conduct_restrained_modifier_desc: "Careful rules of engagement — slower advance, improved unit cohesion."
+ modifier_bm_conduct_aggressive_modifier: "Aggressive Conduct"
+ modifier_bm_conduct_aggressive_modifier_desc: "Maximum firepower doctrine — faster advance, reduced attrition, at the cost of civilian lives."
+ modifier_bm_conduct_total_war_modifier: "Total War Conduct"
+ modifier_bm_conduct_total_war_modifier_desc: "All restraint abandoned — decisive military gains at severe humanitarian and diplomatic cost."
+
+ bm_conduct_restrained_modifier: "Restrained Conduct"
+ bm_conduct_restrained_modifier_desc: "Careful rules of engagement — slower advance, improved unit cohesion."
+ bm_conduct_aggressive_modifier: "Aggressive Conduct"
+ bm_conduct_aggressive_modifier_desc: "Maximum firepower doctrine — faster advance, reduced attrition, at the cost of civilian lives."
+ bm_conduct_total_war_modifier: "Total War Conduct"
+ bm_conduct_total_war_modifier_desc: "All restraint abandoned — decisive military gains at severe humanitarian and diplomatic cost."
+
+ # =====================================================================
+ # WARFARE CONDUCT CATEGORY & DECISIONS
+ # =====================================================================
+ bm_warfare_conduct_category: "§YConduct of Warfare§!"
+ bm_warfare_conduct_category_desc: "Directives governing how your military treats §Ycivilian populations§! in contested territories.\n\nMore §Grestrained§! conduct reduces §Rcivilian casualties§!, slows §Rdevastation§!, and preserves §Ginternational standing§!.\nMore §Raggressive§! conduct accelerates your advance at a sustained §Rhumanitarian and logistical cost§!.\n\nThe §Ycurrently active stance§! is greyed out."
+
+ bm_conduct_humanitarian: "§CHumanitarian Conduct§!"
+ bm_conduct_humanitarian_desc: "Issue absolute orders to protect civilian life. Bombardment near populated areas is forbidden. Medical units accompany every advance.\n\n§YCombat effects:§!\nArmy Speed §R-15%§!\nAttrition §R+8%§!\nPlanning Speed §R-10%§!\nSoft Attack §R-10%§!\nDig-In Speed §R-5%§!\nDefence §G+5%§!\nMax Organisation §G+5§!\nReinforce Rate §G+5%§!\nOrg Loss When Moving §G-5%§!\nSupply Consumption §R+10%§! (feeding prisoners, civilian logistics)\n\n§YOccupation effects:§!\nMonthly Opinion Gain §G+40%§!\nEnemies need §G40%§! longer to justify war on you\nResistance in occupied states §Gdecreases§!\nCompliance Growth §G+10%§!\nPolitical Power per day §G+0.10§!\n\n§YOn selecting:§!\nStability §G+10%§!\nWar Support §R-20%§! (generals resist the order)\n\n§YCivilian Impact:§!\nCivilian death rate §G×0.25§!\nDevastation gain §G×0.70§!"
+
+ bm_conduct_pacifist: "§GPacifist Conduct§!"
+ bm_conduct_pacifist_desc: "Issue strict orders to minimise all civilian harm. Soldiers avoid populated areas and treat captured civilians humanely.\n\n§YCombat effects:§!\nArmy Speed §R-10%§!\nAttrition §R+5%§!\nSoft Attack §R-5%§!\nDig-In Speed §R-5%§!\nDefence §G+3%§!\nMax Organisation §G+3§!\nReinforce Rate §G+3%§!\nOrg Loss When Moving §G-3%§!\nSupply Consumption §R+5%§!\n\n§YOccupation effects:§!\nMonthly Opinion Gain §G+25%§!\nEnemies need §G20%§! longer to justify war on you\nResistance in occupied states §Gslightly decreases§!\nCompliance Growth §G+5%§!\nPolitical Power per day §G+0.05§!\n\n§YOn selecting:§!\nStability §G+5%§!\n\n§YCivilian Impact:§!\nCivilian death rate §G×0.50§!\nDevastation gain §G×0.85§!"
+
+ bm_conduct_restrained: "§LRestrained Conduct§!"
+ bm_conduct_restrained_desc: "Maintain disciplined rules of engagement that limit collateral damage where feasible.\n\n§YCombat effects:§!\nArmy Speed §R-5%§!\nAttrition §R+2%§!\nDefence §G+2%§!\nMax Organisation §G+2§!\nReinforce Rate §G+2%§!\nSupply Consumption §R+2%§!\n\n§YOccupation effects:§!\nMonthly Opinion Gain §G+10%§!\nEnemies need §G10%§! longer to justify war on you\nResistance in occupied states §Gslightly decreases§!\nCompliance Growth §G+3%§!\n\n§YCivilian Impact:§!\nCivilian death rate §G×0.75§!\nDevastation gain §G×0.90§!"
+
+ bm_conduct_standard: "Standard Conduct§!"
+ bm_conduct_standard_desc: "Follow standard wartime rules of engagement. Civilian harm is not deliberately sought, but operational necessity takes priority when required.\n\nThis is the §Ydefault posture§! — no special restrictions, no special license.\n\n§YCivilian Impact:§!\nCivilian death rate §Y×1.00§!\nDevastation gain §Y×1.00§! — baseline"
+
+ bm_conduct_aggressive: "§YAggressive Conduct§!"
+ bm_conduct_aggressive_desc: "Prioritise operational speed over humanitarian caution. Artillery and air support are used freely regardless of proximity to civilian areas.\n\n§YCombat effects:§!\nArmy Speed §G+5%§!\nBreakthrough §G+5%§!\nAttrition §G-5%§!\nSoft Attack §G+5%§!\nDig-In Speed §G+5%§!\nSuppression §G+10§!\nExperience Gain §G+5%§!\nMax Organisation §R-2§!\nSupply Consumption §R+10%§! (heavy ammunition expenditure)\n\n§YOccupation effects:§!\nMonthly Opinion Gain §R-15%§!\nGenerating wargoal tension costs §G10%§! less\nEnemies need §R10%§! less time to justify war on you\nResistance in occupied states §Rincreases§!\nCompliance Growth §R-5%§!\nPolitical Power per day §R-0.05§!\nAll nations: §R-30§! Opinion of you\n\n§YOn selecting:§!\nWar Support §R-5%§!\n\n§YCivilian Impact:§!\nCivilian death rate §R×1.25§!\nDevastation gain §R×1.15§!"
+
+ bm_conduct_total_war: "§OTotal War Conduct§!"
+ bm_conduct_total_war_desc: "All restraint is abandoned. Civilian infrastructure is a legitimate military target. Terror is used as a tool of war.\n\n§YCombat effects:§!\nArmy Speed §G+10%§!\nBreakthrough §G+10%§!\nAttrition §G-5%§!\nSoft Attack §G+10%§!\nDig-In Speed §G+10%§!\nSuppression §G+20§!\nExperience Gain §G+10%§!\nMax Organisation §R-5§!\nSupply Consumption §R+20%§! (relentless operations)\n\n§YOccupation effects:§!\nMonthly Opinion Gain §R-30%§!\nGenerating wargoal tension costs §G20%§! less\nEnemies need §R20%§! less time to justify war on you\nWar Support §R-1%§! per week\nResistance in occupied states §Rgrows significantly§!\nCompliance Growth §R-10%§!\nPolitical Power per day §R-0.05§!\nAll nations: §R-60§! Opinion of you\n\n§YOn selecting:§!\nWar Support §R-10%§!\nStability §R-5%§!\n\n§YCivilian Impact:§!\nCivilian death rate §R×1.50§!\nDevastation gain §R×1.30§!"
+
+ bm_conduct_scorched_earth: "§RScorched Earth§!"
+ bm_conduct_scorched_earth_desc: "Systematic destruction of everything. No mercy, no infrastructure left standing. The enemy inherits ruins — and so do you.\n\n§YCombat effects:§!\nArmy Speed §G+15%§!\nBreakthrough §G+15%§!\nAttrition §G-10%§!\nSoft Attack §G+15%§!\nDig-In Speed §G+15%§!\nSuppression §G+30§!\nExperience Gain §G+15%§!\nMax Organisation §R-10§!\nSupply Consumption §R+30%§! (destroying your own future logistics)\n\n§YOccupation effects:§!\nMonthly Opinion Gain §R-50%§!\nGenerating wargoal tension costs §G30%§! less\nEnemies need §R40%§! less time to justify war on you\nWar Support §R-1%§! per week\nResistance in occupied states §Rgoes into open revolt§!\nCompliance Growth §R-20%§!\nPolitical Power per day §R-0.10§!\nAll nations: §R-100§! Opinion of you\n\n§YOn selecting:§!\nWar Support §R-15%§!\nStability §R-10%§!\nPolitical Power §R-30§!\n\n§YCivilian Impact:§!\nCivilian death rate §R×2.00§!\nDevastation gain §R×1.60§!"
+
+ bm_conduct_humanitarian_active: "§CHumanitarian Conduct§!"
+ bm_conduct_pacifist_active: "§GPacifist Conduct§!"
+ bm_conduct_restrained_active: "§LRestrained Conduct§!"
+ bm_conduct_standard_active: "Standard Conduct§!"
+ bm_conduct_aggressive_active: "§YAggressive Conduct§!"
+ bm_conduct_total_war_active: "§OTotal War Conduct§!"
+ bm_conduct_scorched_earth_active: "§RScorched Earth§!"
+
+ # =====================================================================
+ # REFUGEE POLICY CATEGORY & DECISIONS
+ # =====================================================================
+ bm_refugee_policy_category: "§YWartime Refugee Policy§!"
+ bm_refugee_policy_category_desc: "Determines how open your borders are to §Ydisplaced civilians§! fleeing war.\n\n§GWelcoming§! policies absorb more refugees but strain your §Reconomy and manpower§!.\n§RClosed§! borders preserve resources but §Risolate you diplomatically§! and breed §Runrest in occupied territories§!.\n\nThe §Ycurrently active policy§! is greyed out."
+
+ bm_refugees_open: "§COpen Door Policy§!"
+ bm_refugees_open_desc: "Your borders are open to all displaced persons without restriction. Refugees are actively welcomed and resettled.\n\n§YActive effects:§!\nWeekly Manpower §R-75§!\nConsumer Goods §R+5%§!\n\n§YOn selecting:§!\nStability §G+5%§!\n\n§YRouting effect:§!\nRefugees §Gstrongly prefer§! your territory"
+
+ bm_refugees_open_door: "§COpen Door Policy§!"
+ bm_refugees_open_door_desc: "Your borders are open to all displaced persons without restriction. Refugees are actively welcomed and resettled.\n\n§YActive effects:§!\nWeekly Manpower §R-75§!\nConsumer Goods §R+5%§!\n\n§YOn selecting:§!\nStability §G+5%§!\n\n§YRouting effect:§!\nRefugees §Gstrongly prefer§! your territory"
+
+ bm_refugees_welcoming: "§GWelcoming Policy§!"
+ bm_refugees_welcoming_desc: "Refugees are accepted and processed through an organised intake system. Your country remains a preferred destination for those fleeing conflict.\n\n§YActive effects:§!\nWeekly Manpower §R-35§!\nConsumer Goods §R+2.5%§!\n\n§YOn selecting:§!\nStability §G+2%§!\n\n§YRouting effect:§!\nRefugees §Gprefer§! your territory"
+
+ bm_refugees_neutral: "Neutral Policy§!"
+ bm_refugees_neutral_desc: "Standard wartime border controls. Refugees may enter through normal channels but no special provisions are made.\n\nThis is the §Ydefault posture§!.\n\n§YRouting effect:§!\nRefugees may enter normally"
+
+ bm_refugees_discouraging: "§YDiscouraging Policy§!"
+ bm_refugees_discouraging_desc: "Border controls are tightened and refugee intake is actively limited. Significant bureaucratic resources drain political capital, and visible suffering breeds unrest.\n\n§YActive effects:§!\nPolitical Power per day §R-0.10§!\nResistance in occupied states §Rslightly increases§!\n\n§YOn selecting:§!\nStability §R-2%§!\n\n§YRouting effect:§!\nRefugees §Ravoid§! your territory unless no other option exists"
+
+ bm_refugees_closed_borders: "§RClosed Borders§!"
+ bm_refugees_closed_borders_desc: "Borders are sealed against all refugee movement. The enforcement apparatus is costly and your isolationism is noted internationally.\n\n§YActive effects:§!\nPolitical Power per day §R-0.20§!\nMonthly Opinion Gain §R-15%§!\nResistance in occupied states §Rincreases§!\n\n§YOn selecting:§!\nStability §R-5%§!\nWar Support §R-5%§!\n\n§YRouting effect:§!\nRefugees §Rcannot§! enter your territory"
+
+ bm_refugees_closed: "§RClosed Borders§!"
+ bm_refugees_closed_desc: "Borders are sealed against all refugee movement. The enforcement apparatus is costly and your isolationism is noted internationally.\n\n§YActive effects:§!\nPolitical Power per day §R-0.20§!\nMonthly Opinion Gain §R-15%§!\nResistance in occupied states §Rincreases§!\n\n§YOn selecting:§!\nStability §R-5%§!\nWar Support §R-5%§!\n\n§YRouting effect:§!\nRefugees §Rcannot§! enter your territory"
+
+ # =====================================================================
+ # WARFARE CONDUCT TOOLTIP FACTORS
+ # =====================================================================
+ SDFactors12Key_humanitarian: "\n     Humanitarian Conduct: §GDevastation Gain x0.70§!"
+ SDFactors12Key_pacifist: "\n     Pacifist Conduct: §GDevastation Gain x0.85§!"
+ SDFactors12Key_restrained: "\n     Restrained Conduct: §GDevastation Gain x0.90§!"
+ SDFactors12Key_aggressive: "\n     Aggressive Conduct: §YDevastation Gain x1.15§!"
+ SDFactors12Key_total_war: "\n     Total War Conduct: §RDevastation Gain x1.30§!"
+ SDFactors12Key_scorched_earth: "\n     Scorched Earth: §RDevastation Gain x1.60§!"
+
+ # =====================================================================
+ # DYNAMIC MODIFIER & OPINION MODIFIER NAMES (kept from uploaded file)
+ # =====================================================================
+ bm_conduct_aggressive_opinion: "Aggressive Warfare Conduct"
+ bm_conduct_aggressive_opinion_desc: "Reports of civilian casualties have reached the international community. This nation's conduct of war is being condemned."
+ bm_conduct_total_war_opinion: "Total War Atrocities"
+ bm_conduct_total_war_opinion_desc: "Documented atrocities and deliberate targeting of civilian populations have provoked widespread international outrage."
+ bm_conduct_scorched_earth_opinion: "Scorched Earth War Crimes"
+ bm_conduct_scorched_earth_opinion_desc: "Systematic destruction of civilian infrastructure and deliberate mass atrocities have placed this regime beyond the pale of civilised nations."
+ modifier_bm_conduct_humanitarian_modifier: "Humanitarian Conduct"
+ modifier_bm_conduct_humanitarian_modifier_desc: "Strict civilian protection orders — severe combat penalties, but occupied populations accept your presence far more readily."
+ modifier_bm_conduct_pacifist_modifier: "Pacifist Conduct"
+ modifier_bm_conduct_pacifist_modifier_desc: "Principled restraint in targeting — slower advance, improved unit cohesion, lower resistance in occupied territories."
+ modifier_bm_conduct_restrained_modifier: "Restrained Conduct"
+ modifier_bm_conduct_restrained_modifier_desc: "Careful rules of engagement — modest trade-offs, small combat bonuses from unit cohesion."
+ modifier_bm_conduct_aggressive_modifier: "Aggressive Conduct"
+ modifier_bm_conduct_aggressive_modifier_desc: "Maximum firepower doctrine — faster advance, high ammunition expenditure, psychological toll on unit cohesion."
+ modifier_bm_conduct_total_war_modifier: "Total War Conduct"
+ modifier_bm_conduct_total_war_modifier_desc: "All restraint abandoned — relentless operations burn through supplies and erode unit organisation over time."
+ modifier_bm_conduct_scorched_earth_modifier: "Scorched Earth Conduct"
+ modifier_bm_conduct_scorched_earth_modifier_desc: "Systematic destruction as doctrine — maximum firepower, catastrophic supply consumption, severe long-term unit degradation."
+ bm_conduct_humanitarian_modifier: "Humanitarian Conduct"
+ bm_conduct_humanitarian_modifier_desc: "Strict civilian protection orders — severe combat penalties, but occupied populations accept your presence far more readily."
+ bm_conduct_pacifist_modifier: "Pacifist Conduct"
+ bm_conduct_pacifist_modifier_desc: "Principled restraint in targeting — slower advance, improved unit cohesion, lower resistance in occupied territories."
+ bm_conduct_restrained_modifier: "Restrained Conduct"
+ bm_conduct_restrained_modifier_desc: "Careful rules of engagement — modest trade-offs, small combat bonuses from unit cohesion."
+ bm_conduct_aggressive_modifier: "Aggressive Conduct"
+ bm_conduct_aggressive_modifier_desc: "Maximum firepower doctrine — faster advance, high ammunition expenditure, psychological toll on unit cohesion."
+ bm_conduct_total_war_modifier: "Total War Conduct"
+ bm_conduct_total_war_modifier_desc: "All restraint abandoned — relentless operations burn through supplies and erode unit organisation over time."
+ bm_conduct_scorched_earth_modifier: "Scorched Earth Conduct"
+ bm_conduct_scorched_earth_modifier_desc: "Systematic destruction as doctrine — maximum firepower, catastrophic supply consumption, severe long-term unit degradation."
+ 
+ # ── Reconstruction Focus decisions (state-targeted) ──────────────────────────
+
+ devastation_reconstruction_hide: "Hide Reconstruction Decisions"
+ devastation_reconstruction_hide_desc: "Hide the state-level reconstruction decisions from the map and decision panel."
+
+ devastation_reconstruction_show: "Show Reconstruction Decisions"
+ devastation_reconstruction_show_desc: "Show the state-level reconstruction decisions on the map and decision panel."
+
+ devastation_reconstruction_focus_small: "Prioritize Reconstruction: [FROM.GetName]"
+ devastation_reconstruction_focus_small_desc: "Focus reconstruction efforts on [FROM.GetName], channeling resources and labor into restoring its essential infrastructure and economic capacity."
+
+ devastation_reconstruction_focus_medium: "Prioritize Reconstruction: [FROM.GetName]"
+ devastation_reconstruction_focus_medium_desc: "Commit significant industrial resources to accelerating the rebuilding of [FROM.GetName], a sizable urban center whose recovery is critical to regional stability."
+
+ devastation_reconstruction_focus_large: "Prioritize Reconstruction: [FROM.GetName]"
+ devastation_reconstruction_focus_large_desc: "Launch a comprehensive reconstruction drive in [FROM.GetName], one of our most significant population and industrial centers. Its recovery demands substantial commitment of manpower and industry."
