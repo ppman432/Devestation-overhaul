@@ -1,0 +1,923 @@
+types = {
+
+	##########################################
+	# MASSIVE CARPET BOMBING RAID
+	# Historically calibrated based on:
+	# - Operation Meetinghouse (Tokyo, March 1945)
+	# - Operation Gomorrah (Hamburg, July 1943)
+	# - Dresden bombing (February 1945)
+	# - WW2 bomber loss rate statistics
+	#
+	# FIXED: All damage_building calls now use static numbers via random_list
+	##########################################
+	devastation_massive_carpet_bombing = {
+		
+		category = devastation_strategic_bombing_category
+				
+		days_to_prepare = 14
+		command_power = 50
+		
+		# AI behavior - adjusted for historical doctrine
+		ai_will_do = {
+			base = 1  # Reduced from 2 - big raids were actually rare
+			
+			modifier = {
+				factor = 5  # Increased from 3 - AI really wants high-value targets
+				var:target_state = {
+					OR = {
+						is_capital = yes
+						# Hamburg-level targets: major industrial centers
+						AND = {
+							arms_factory > 2
+							industrial_complex > 2
+						}
+						# Tokyo-level targets: mega cities
+						OR = {
+							state_strategic_value > 15
+							OR = {
+								is_megalopolis_state = yes
+								is_metropolis_state = yes
+							}
+						}
+					}
+				}
+			}
+			
+			modifier = {
+				factor = 2
+				FROM = {
+					is_major = yes
+				}
+			}
+			
+			modifier = {
+				factor = 0
+				FROM = {
+					OR = {
+						tag = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+			
+			modifier = {
+				factor = 0
+				# Don't bomb already devastated areas (diminishing returns)
+				var:target_state = {
+					check_variable = { state_devastation_value > 70 }
+				}
+			}
+			
+			modifier = {
+				factor = 0.2
+				# Heavy AA makes AI very reluctant (historical: raids avoided heavily defended targets)
+				var:target_state = {
+					anti_air_building > 2
+				}
+			}
+		}
+		
+		visible = {
+			always = yes
+		}
+		
+		show_target = {
+			FROM = {
+				has_war_with = ROOT
+				NOT = {
+					OR = {
+						tag = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+			
+			var:target_state = {
+				# Must have valuable targets (historical: only major cities were mass-raided)
+				OR = {
+					is_capital = yes
+					state_strategic_value > 8
+					AND = {
+						industrial_complex > 2
+						arms_factory > 2
+					}
+					AND = {
+						infrastructure > 4
+						OR = {
+							is_megalopolis_state = yes
+							is_metropolis_state = yes
+							is_large_city_state = yes
+						}
+					}
+				}
+				
+				# Not already completely devastated
+				NOT = { check_variable = { state_devastation_value > 95 } }
+			}
+		}
+		
+		available = {
+			always = yes
+		}
+		
+		launchable = {
+			FROM = {
+				has_war_with = ROOT
+			}
+		}
+		
+		launch_sound = raid_launch_air
+		
+		target_type = {
+			province = any
+		}
+		
+		custom_map_icon = GFX_raid_target_icon_massive_bombing_raid
+		
+		starting_point = {
+			types = { air_base }
+		}
+		
+		arrow = {
+			type = air
+		}
+		
+		# Unit requirements - need lots of strategic bombers
+		unit_requirements = {
+			equipment = {
+				type = { strategic_bomber }
+				amount = { min = 100 max = 500 }
+			}
+		}
+		
+		##########################################
+		# SUCCESS FACTORS - Historically Calibrated
+		##########################################
+		success_factors = {
+			success = {
+				base = 0.55  # INCREASED from 0.50 - more stable baseline
+				
+				# Crew experience matters significantly
+				# Historical: veteran crews had much better accuracy
+				experience = {
+					reference = 1.0
+					weight = 0.15  # INCREASED from 0.12
+					start_weight = -0.15
+				}
+				
+				# Bomber defensive capability
+				air_defence = {
+					reference = 100
+					start_weight = -0.08
+					weight = 0.08
+				}
+				
+				# Bomber agility helps evade fighters
+				air_agility = {
+					reference = 100
+					start_weight = -0.12
+					weight = 0.12
+				}
+				
+				# Reliability critical for long missions
+				# Historical: mechanical failures were major cause of losses
+				reliability = {
+					start_weight = -0.12  # REDUCED from -0.15
+					weight = 0.10  # REDUCED from 0.12
+				}
+				
+				# AIR SUPERIORITY IS CRITICAL
+				# Historical: Hamburg (total air superiority) = 1.5% losses
+				#            Schweinfurt (no superiority) = 20% losses
+				air_superiority = {
+					reference = 1.0
+					start_weight = -0.30  # REDUCED from -0.35 - less extreme penalty
+					weight = 0.30  # REDUCED from 0.40 - less extreme bonus
+				}
+				
+				# Enemy interception extremely dangerous
+				# Historical: concentrated fighter defense could devastate bomber streams
+				interception = {
+					reference = 300  # INCREASED from 250 - less sensitive
+					weight = -0.25
+				}
+				
+				# Enemy AA significant threat
+				# Historical: Hamburg's AA was relocated, Dresden had minimal AA
+				anti_air = {
+					reference = 5
+					weight = -0.25  # REDUCED from -0.30
+				}
+			}
+			
+			# Critical success = Firestorm conditions
+			# Historical: Only Hamburg, Tokyo, Dresden achieved this
+			critical = {
+				base = 0.10  # REDUCED from 0.12 - make firestorms rarer
+				
+				# Very high air superiority enables perfect conditions
+				# Only kicks in above 80% air superiority (REDUCED from 85%)
+				air_superiority = {
+					reference = 1.0
+					start_reference = 0.80  # REDUCED from 0.85 - easier to trigger
+					start_weight = 0
+					weight = 0.15  # REDUCED from 0.20 - less dramatic bonus
+				}
+				
+				# Experience critical for firestorm (requires perfect bombing pattern)
+				# Only veteran crews (60%+) can execute perfect firestorm pattern
+				experience = {
+					reference = 1.0
+					start_reference = 0.6
+					start_weight = 0
+					weight = 0.12  # REDUCED from 0.18 - less dramatic bonus
+				}
+				
+				# Low AA means bombs hit combustible targets
+				# Heavy AA PREVENTS firestorms by disrupting bombing pattern
+				anti_air = {
+					reference = 5.0
+					weight = -0.10  # REDUCED from -0.15 - less penalty
+				}
+			}
+			
+			# DISASTER CHANCE - Historically Accurate
+			# Historical: Schweinfurt = 20% losses (disaster)
+			#            Deep raids without escort = 6-10% losses
+			disaster = {
+				base = 0.10  # 10% base disaster chance
+				
+				# GOOD air superiority REDUCES disaster chance
+				# Poor air superiority INCREASES disaster chance
+				air_superiority = {
+					reference = 1.0
+					start_weight = 0.25  # REDUCED from 0.30
+					weight = -0.30  # REDUCED from -0.35
+				}
+				
+				# Heavy AA INCREASES disaster chance
+				anti_air = {
+					reference = 5.0
+					weight = 0.20  # REDUCED from 0.25
+				}
+				
+				# Heavy interception INCREASES disaster chance
+				interception = {
+					reference = 300
+					weight = 0.20  # REDUCED from 0.25
+				}
+				
+				# Green crews INCREASE disaster chance
+				# Veteran crews REDUCE disaster chance
+				experience = {
+					reference = 1.0
+					start_weight = 0.15  # REDUCED from 0.20
+					weight = -0.12  # REDUCED from -0.15
+				}
+			}
+		}
+		
+		##########################################
+		# RAID OUTCOMES - Historically Calibrated
+		##########################################
+		success_levels = {
+			
+			# DISASTER - Schweinfurt/Regensburg level losses
+			# Historical: 20% bomber losses, offensive halted
+			# HIGH RISK: This should HURT
+			failure = {
+				actor_effects = {
+					var:actor_country = {
+						add_war_support = -0.05
+						add_stability = -0.04
+						add_political_power = -100
+						custom_effect_tooltip = devastation_massive_carpet_bombing_disaster_actor_tt
+					}
+					
+					# CATASTROPHIC bomber losses
+					# Historical: Schweinfurt = 20%, worst cases up to 30%
+					raid_damage_units = {
+						plane_loss = 0.28  # 28% - devastating losses
+						ratio = yes
+					}
+				}
+				
+				victim_effects = {
+					var:target_state = {
+						# Minimal devastation (scattered, inaccurate bombing)
+						set_temp_variable_to_random = { var = devastation_gain min = 1 max = 3 }
+						add_to_variable = { state_devastation_value = devastation_gain }
+						clamp_variable = { var = state_devastation_value min = 0 max = 100 }
+						
+						# Minimal casualties (bombs scattered) - still scales with density
+						# UPDATED: ×1.5 multiplier for better modern/WW2 balance
+						set_temp_variable_to_random = { var = casualty_rate min = 0.00075 max = 0.003 }
+						
+						# State category multiplier - even scattered bombs kill more in cities
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_city }
+						}
+						else_if = {
+							limit = { is_large_town_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_town }
+						}
+						else_if = {
+							limit = { is_town_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_town }
+						}
+						else_if = {
+							limit = { is_rural_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_rural }
+						}
+						else_if = {
+							limit = { is_pastoral_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_pastoral }
+						}
+						
+						set_temp_variable = { state_casualties = state_population_k }
+						multiply_temp_variable = { state_casualties = casualty_rate }
+						multiply_temp_variable = { state_casualties = 1000 }
+						divide_temp_variable = { state_casualties = 1000 }
+						add_to_variable = { devastation_state_casualties = state_casualties }
+						
+						multiply_temp_variable = { state_casualties = -1000 }
+						add_manpower = state_casualties
+						
+						# Minor building damage (random, scattered) - FIXED: using static values
+						random_list = {
+							30 = { damage_building = { type = infrastructure damage = 0.5 } }
+							30 = { damage_building = { type = infrastructure damage = 0.8 } }
+							20 = { damage_building = { type = infrastructure damage = 0.3 } }
+							20 = { } # No damage
+						}
+						
+						devastation_state_calc_modifiers = yes
+						calc_pop_change = yes
+					}
+					
+					# Victim gets propaganda victory
+					var:victim_country = {
+						add_war_support = 0.06
+						add_stability = 0.03
+						add_political_power = 50
+						custom_effect_tooltip = devastation_massive_carpet_bombing_disaster_victim_tt
+					}
+				}
+				
+				visual_effect = {
+					entity = "raid_failed_entity"
+					animation = "attack"
+				}
+				
+				custom_sound = raid_failure
+			}
+			
+			# LIMITED SUCCESS - Typical 1943 raid results
+			# Historical: moderate damage, acceptable but painful losses
+			limited_success = {
+				actor_effects = {
+					var:actor_country = {
+						add_war_support = 0.01
+						add_political_power = 20
+						custom_effect_tooltip = devastation_massive_carpet_bombing_limited_actor_tt
+					}
+					
+					# Moderate bomber losses (8%)
+					raid_damage_units = {
+						plane_loss = 0.08
+						ratio = yes
+					}
+					
+					raid_add_unit_experience = 0.06
+				}
+				
+				victim_effects = {
+					var:target_state = {
+						# Moderate devastation (6-14%)
+						set_temp_variable_to_random = { var = devastation_gain min = 6 max = 14 }
+						
+						# State category multiplier
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_city }
+						}
+						else_if = {
+							limit = { is_large_town_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_large_town }
+						}
+						else_if = {
+							limit = { is_town_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_town }
+						}
+						else_if = {
+							limit = { is_rural_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_rural }
+						}
+						else_if = {
+							limit = { is_pastoral_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_pastoral }
+						}
+						
+						add_to_variable = { state_devastation_value = devastation_gain }
+						clamp_variable = { var = state_devastation_value min = 0 max = 100 }
+						
+						# Civilian casualties (0.6-1.4% of state) - scales with state density
+						# UPDATED: ×2.0 multiplier for better modern/WW2 balance
+						set_temp_variable_to_random = { var = casualty_rate min = 0.006 max = 0.014 }
+						
+						# State category multiplier - dense cities suffer more casualties
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_city }
+						}
+						else_if = {
+							limit = { is_large_town_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_town }
+						}
+						else_if = {
+							limit = { is_town_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_town }
+						}
+						else_if = {
+							limit = { is_rural_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_rural }
+						}
+						else_if = {
+							limit = { is_pastoral_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_pastoral }
+						}
+						
+						set_temp_variable = { state_casualties = state_population_k }
+						multiply_temp_variable = { state_casualties = casualty_rate }
+						multiply_temp_variable = { state_casualties = 1000 }
+						divide_temp_variable = { state_casualties = 1000 }
+						add_to_variable = { devastation_state_casualties = state_casualties }
+						
+						multiply_temp_variable = { state_casualties = -1000 }
+						add_manpower = state_casualties
+						
+						# Building damage (1.5-2.5 levels) - FIXED: using random_list with static values
+						random_list = {
+							25 = {
+								damage_building = { type = infrastructure damage = 1.5 }
+								damage_building = { type = industrial_complex damage = 1.5 }
+								damage_building = { type = arms_factory damage = 1.5 }
+							}
+							25 = {
+								damage_building = { type = infrastructure damage = 2 }
+								damage_building = { type = industrial_complex damage = 2 }
+								damage_building = { type = arms_factory damage = 2 }
+							}
+							25 = {
+								damage_building = { type = infrastructure damage = 2.5 }
+								damage_building = { type = industrial_complex damage = 2.5 }
+								damage_building = { type = arms_factory damage = 2.5 }
+							}
+							25 = {
+								damage_building = { type = infrastructure damage = 1.8 }
+								damage_building = { type = industrial_complex damage = 1.8 }
+								damage_building = { type = arms_factory damage = 1.8 }
+							}
+						}
+						
+						devastation_state_calc_modifiers = yes
+						calc_pop_change = yes
+					}
+					
+					var:victim_country = {
+						add_war_support = -0.03
+						add_stability = -0.025
+						custom_effect_tooltip = devastation_massive_carpet_bombing_limited_victim_tt
+					}
+				}
+				
+				visual_effect = {
+					entity = "air_raids_2_limited_success_entity"
+					animation = "attack"
+				}
+				
+				custom_sound = raid_success
+			}
+			
+			# SUCCESS - Major raid without firestorm
+			# Historical: Dresden-level, heavy Hamburg raids
+			success = {
+				actor_effects = {
+					var:actor_country = {
+						add_war_support = 0.03
+						add_political_power = 50
+						custom_effect_tooltip = devastation_massive_carpet_bombing_success_actor_tt
+					}
+					
+					# Light-to-moderate bomber losses (4%)
+					raid_damage_units = {
+						plane_loss = 0.04
+						ratio = yes
+					}
+					
+					raid_add_unit_experience = 0.12
+				}
+				
+				victim_effects = {
+					var:target_state = {
+						# Major devastation (15-30%)
+						set_temp_variable_to_random = { var = devastation_gain min = 15 max = 30 }
+						
+						# State category multiplier
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_city }
+						}
+						else_if = {
+							limit = { is_large_town_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_large_town }
+						}
+						else_if = {
+							limit = { is_town_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_town }
+						}
+						else_if = {
+							limit = { is_rural_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_rural }
+						}
+						else_if = {
+							limit = { is_pastoral_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_pastoral }
+						}
+						
+						add_to_variable = { state_devastation_value = devastation_gain }
+						clamp_variable = { var = state_devastation_value min = 0 max = 100 }
+						
+						# Heavy civilian casualties (2.1-4.5%) - scales with state density
+						# UPDATED: ×3.0 multiplier for better modern/WW2 balance
+						set_temp_variable_to_random = { var = casualty_rate min = 0.021 max = 0.045 }
+						
+						# State category multiplier - dense cities suffer more casualties
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_city }
+						}
+						else_if = {
+							limit = { is_large_town_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_town }
+						}
+						else_if = {
+							limit = { is_town_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_town }
+						}
+						else_if = {
+							limit = { is_rural_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_rural }
+						}
+						else_if = {
+							limit = { is_pastoral_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_pastoral }
+						}
+						
+						set_temp_variable = { state_casualties = state_population_k }
+						multiply_temp_variable = { state_casualties = casualty_rate }
+						multiply_temp_variable = { state_casualties = 1000 }
+						divide_temp_variable = { state_casualties = 1000 }
+						add_to_variable = { devastation_state_casualties = state_casualties }
+						
+						multiply_temp_variable = { state_casualties = -1000 }
+						add_manpower = state_casualties
+						
+						# Severe building damage (2.5-4 levels) - FIXED: using random_list
+						random_list = {
+							25 = {
+								damage_building = { type = infrastructure damage = 2.5 }
+								damage_building = { type = industrial_complex damage = 2.5 }
+								damage_building = { type = arms_factory damage = 2.5 }
+								damage_building = { type = air_base damage = 2.5 }
+							}
+							25 = {
+								damage_building = { type = infrastructure damage = 3 }
+								damage_building = { type = industrial_complex damage = 3 }
+								damage_building = { type = arms_factory damage = 3 }
+								damage_building = { type = air_base damage = 3 }
+							}
+							25 = {
+								damage_building = { type = infrastructure damage = 3.5 }
+								damage_building = { type = industrial_complex damage = 3.5 }
+								damage_building = { type = arms_factory damage = 3.5 }
+								damage_building = { type = air_base damage = 3.5 }
+							}
+							25 = {
+								damage_building = { type = infrastructure damage = 4 }
+								damage_building = { type = industrial_complex damage = 4 }
+								damage_building = { type = arms_factory damage = 4 }
+								damage_building = { type = air_base damage = 4 }
+							}
+						}
+						
+						# Secondary building damage (70% of primary) - FIXED
+						random_list = {
+							50 = {
+								damage_building = { type = dockyard damage = 2 }
+								damage_building = { type = synthetic_refinery damage = 2 }
+							}
+							50 = {
+								damage_building = { type = dockyard damage = 2.5 }
+								damage_building = { type = synthetic_refinery damage = 2.5 }
+							}
+						}
+						
+						devastation_state_calc_modifiers = yes
+						calc_pop_change = yes
+					}
+					
+					var:victim_country = {
+						add_war_support = -0.05
+						add_stability = -0.04
+						add_political_power = -40
+						custom_effect_tooltip = devastation_massive_carpet_bombing_success_victim_tt
+					}
+				}
+				
+				visual_effect = {
+					entity = "air_raids_2_success_entity"
+					animation = "attack"
+				}
+			
+				custom_sound = raid_success
+			}
+			
+			# CRITICAL SUCCESS - FIRESTORM
+			# Historical: Tokyo (March 1945), Hamburg (July 1943)
+			# EXTREMELY RARE - perfect conditions needed
+			critical_success = {
+				actor_effects = {
+					var:actor_country = {
+						add_war_support = 0.06
+						add_political_power = 100
+						add_stability = 0.03
+						custom_effect_tooltip = devastation_massive_carpet_bombing_critical_actor_tt
+					}
+					
+					# Minimal bomber losses (2.5%) - THE REWARD
+					raid_damage_units = {
+						plane_loss = 0.025
+						ratio = yes
+					}
+					
+					raid_add_unit_experience = 0.25
+				}
+				
+				victim_effects = {
+					var:target_state = {
+						# FIRESTORM devastation (30-55%)
+						set_temp_variable_to_random = { var = devastation_gain min = 30 max = 55 }
+						
+						# State category multiplier - FIRESTORM ONLY IN CITIES
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { devastation_gain = global.nuke_casualty_city }
+						}
+						else_if = {
+							# Rural/town areas can't firestorm properly - reduce effect
+							limit = { 
+								OR = {
+									is_large_town_state = yes
+									is_town_state = yes
+								}
+							}
+							multiply_temp_variable = { devastation_gain = 0.7 }
+						}
+						else_if = {
+							# Rural firestorms basically impossible
+							limit = { 
+								OR = {
+									is_rural_state = yes
+									is_pastoral_state = yes
+								}
+							}
+							multiply_temp_variable = { devastation_gain = 0.4 }
+						}
+						
+						add_to_variable = { state_devastation_value = devastation_gain }
+						clamp_variable = { var = state_devastation_value min = 0 max = 100 }
+						
+						# CATASTROPHIC civilian casualties (4.0-10.0%) - scales with state density
+						# UPDATED: ×4.0 multiplier for better modern/WW2 balance
+						set_temp_variable_to_random = { var = casualty_rate min = 0.040 max = 0.100 }
+						
+						# State category multiplier - FIRESTORMS kill more in dense cities
+						if = {
+							limit = { is_megalopolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_megalopolis }
+						}
+						else_if = {
+							limit = { is_metropolis_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_metropolis }
+						}
+						else_if = {
+							limit = { is_large_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_large_city }
+						}
+						else_if = {
+							limit = { is_city_state = yes }
+							multiply_temp_variable = { casualty_rate = global.nuke_casualty_city }
+						}
+						else_if = {
+							# Towns/rural - lower casualties even in firestorm
+							limit = { 
+								OR = {
+									is_large_town_state = yes
+									is_town_state = yes
+								}
+							}
+							multiply_temp_variable = { casualty_rate = 0.7 }
+						}
+						else_if = {
+							# Rural/pastoral - minimal firestorm casualties (dispersed population)
+							limit = { 
+								OR = {
+									is_rural_state = yes
+									is_pastoral_state = yes
+								}
+							}
+							multiply_temp_variable = { casualty_rate = 0.4 }
+						}
+						
+						set_temp_variable = { state_casualties = state_population_k }
+						multiply_temp_variable = { state_casualties = casualty_rate }
+						multiply_temp_variable = { state_casualties = 1000 }
+						divide_temp_variable = { state_casualties = 1000 }
+						add_to_variable = { devastation_state_casualties = state_casualties }
+						
+						multiply_temp_variable = { state_casualties = -1000 }
+						add_manpower = state_casualties
+						
+						# MASSIVE building destruction (5-8 levels) - FIXED: using random_list with static values
+						random_list = {
+							25 = {
+								# Primary targets - 5 levels
+								damage_building = { type = infrastructure damage = 5 }
+								damage_building = { type = industrial_complex damage = 5 }
+								damage_building = { type = arms_factory damage = 5 }
+								damage_building = { type = air_base damage = 5 }
+								# Secondary - 80% = 4 levels
+								damage_building = { type = dockyard damage = 4 }
+								damage_building = { type = anti_air_building damage = 4 }
+								damage_building = { type = synthetic_refinery damage = 4 }
+								# Tertiary - 60% = 3 levels
+								damage_building = { type = radar_station damage = 3 }
+								damage_building = { type = rocket_site damage = 3 }
+							}
+							25 = {
+								# Primary targets - 6 levels
+								damage_building = { type = infrastructure damage = 6 }
+								damage_building = { type = industrial_complex damage = 6 }
+								damage_building = { type = arms_factory damage = 6 }
+								damage_building = { type = air_base damage = 6 }
+								# Secondary - 80% = 4.8 levels
+								damage_building = { type = dockyard damage = 5 }
+								damage_building = { type = anti_air_building damage = 5 }
+								damage_building = { type = synthetic_refinery damage = 5 }
+								# Tertiary - 60% = 3.6 levels
+								damage_building = { type = radar_station damage = 4 }
+								damage_building = { type = rocket_site damage = 4 }
+							}
+							25 = {
+								# Primary targets - 7 levels
+								damage_building = { type = infrastructure damage = 7 }
+								damage_building = { type = industrial_complex damage = 7 }
+								damage_building = { type = arms_factory damage = 7 }
+								damage_building = { type = air_base damage = 7 }
+								# Secondary - 80% = 5.6 levels
+								damage_building = { type = dockyard damage = 6 }
+								damage_building = { type = anti_air_building damage = 6 }
+								damage_building = { type = synthetic_refinery damage = 6 }
+								# Tertiary - 60% = 4.2 levels
+								damage_building = { type = radar_station damage = 4 }
+								damage_building = { type = rocket_site damage = 4 }
+							}
+							25 = {
+								# Primary targets - 8 levels (MAXIMUM DESTRUCTION)
+								damage_building = { type = infrastructure damage = 8 }
+								damage_building = { type = industrial_complex damage = 8 }
+								damage_building = { type = arms_factory damage = 8 }
+								damage_building = { type = air_base damage = 8 }
+								# Secondary - 80% = 6.4 levels
+								damage_building = { type = dockyard damage = 6 }
+								damage_building = { type = anti_air_building damage = 6 }
+								damage_building = { type = synthetic_refinery damage = 6 }
+								# Tertiary - 60% = 4.8 levels
+								damage_building = { type = radar_station damage = 5 }
+								damage_building = { type = rocket_site damage = 5 }
+							}
+						}
+						
+						devastation_state_calc_modifiers = yes
+						calc_pop_change = yes
+					}
+					
+					# National morale crisis
+					var:victim_country = {
+						add_war_support = -0.10
+						add_stability = -0.08
+						add_political_power = -100
+						
+						# Production disruption - Hamburg cut industrial output significantly
+						if = {
+							limit = { has_idea = devastation_strategic_bombing_disruption }
+							swap_ideas = {
+								remove_idea = devastation_strategic_bombing_disruption
+								add_idea = devastation_strategic_bombing_disruption_2
+							}
+						}
+						else = {
+							add_timed_idea = {
+								idea = devastation_strategic_bombing_disruption
+								days = 120
+							}
+						}
+						
+						custom_effect_tooltip = devastation_massive_carpet_bombing_critical_victim_tt
+					}
+				}
+				
+				visual_effect = {
+					entity = "air_raids_2_critical_success_entity"
+					animation = "attack"
+				}
+				
+				custom_sound = raid_critical_success
+			}
+		}
+	}
+}

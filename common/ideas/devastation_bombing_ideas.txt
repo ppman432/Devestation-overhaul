@@ -1,0 +1,62 @@
+ideas = {
+
+	country = {
+		
+		# Applied when enemy achieves critical success on massive carpet bombing
+		devastation_strategic_bombing_disruption = {
+			
+			allowed = {
+				always = yes
+			}
+			
+			allowed_civil_war = {
+				always = yes
+			}
+			
+			removal_cost = -1
+			
+			picture = GFX_idea_generic_production_penalty
+			
+			modifier = {
+				production_speed_buildings_factor = -0.15
+				industrial_capacity_factory = -0.10
+				industrial_capacity_dockyard = -0.10
+				production_factory_max_efficiency_factor = -0.15
+				line_change_production_efficiency_factor = -0.20
+				conversion_cost_civ_to_mil_factor = 0.25
+				conversion_cost_mil_to_civ_factor = 0.25
+				consumer_goods_factor = 0.05
+				stability_factor = -0.03
+			}
+		}
+		
+		# Applied if hit by multiple critical bombing raids
+		devastation_strategic_bombing_disruption_2 = {
+			
+			allowed = {
+				always = yes
+			}
+			
+			allowed_civil_war = {
+				always = yes
+			}
+			
+			removal_cost = -1
+			
+			picture = GFX_idea_generic_production_penalty
+			
+			modifier = {
+				production_speed_buildings_factor = -0.25
+				industrial_capacity_factory = -0.20
+				industrial_capacity_dockyard = -0.20
+				production_factory_max_efficiency_factor = -0.25
+				line_change_production_efficiency_factor = -0.35
+				conversion_cost_civ_to_mil_factor = 0.50
+				conversion_cost_mil_to_civ_factor = 0.50
+				consumer_goods_factor = 0.10
+				stability_factor = -0.06
+				war_support_factor = -0.05
+			}
+		}
+	}
+}

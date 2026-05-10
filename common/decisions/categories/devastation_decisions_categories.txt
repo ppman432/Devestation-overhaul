@@ -1,0 +1,33 @@
+# =====================================================================
+# BETTER MECHANICS DEVASTATION — Decision Categories
+# =====================================================================
+
+bm_warfare_conduct_category = {
+	icon = generic_army_support
+	picture = GFX_decision_cat_picture_ussr_ruins
+
+	visible = {
+		always = yes
+	}
+
+	allowed = {
+		always = yes
+	}
+
+	priority = 90
+}
+
+bm_refugee_policy_category = {
+	icon = generic_political_actions
+	picture = GFX_decision_cat_picture_generic_assimilation
+
+	visible = {
+		always = yes
+	}
+
+	allowed = {
+		always = yes
+	}
+
+	priority = 89
+}

@@ -1,0 +1,91 @@
+scripted_map_modes = {
+    devastation_map_mode = {
+        top = {
+            type = state
+            
+            color = {
+                # Base color: neutral tan/beige for 0% devastation
+                set_temp_variable = { red = 0.82 }
+                set_temp_variable = { green = 0.75 }
+                set_temp_variable = { blue = 0.58 }
+                
+                if = {
+                    limit = { check_variable = { FROM.state_devastation_value > 0 } }
+                    
+                    # Calculate devastation percentage as 0-1 scale
+                    set_temp_variable = { devastation_percent = FROM.state_devastation_value }
+                    divide_temp_variable = { devastation_percent = 100 }
+                    
+                    # Red channel: increases strongly (0.82 → 0.95)
+                    set_temp_variable = { red_shift = devastation_percent }
+                    multiply_temp_variable = { red_shift = 0.13 }
+                    add_to_temp_variable = { red = red_shift }
+                    
+                    # Green channel: decreases moderately (0.75 → 0.15)
+                    set_temp_variable = { green_shift = devastation_percent }
+                    multiply_temp_variable = { green_shift = 0.60 }
+                    subtract_from_temp_variable = { green = green_shift }
+                    
+                    # Blue channel: decreases strongly (0.58 → 0.05)
+                    set_temp_variable = { blue_shift = devastation_percent }
+                    multiply_temp_variable = { blue_shift = 0.53 }
+                    subtract_from_temp_variable = { blue = blue_shift }
+                    
+                    # Highlight critical devastation (>50%)
+                    if = {
+                        limit = { check_variable = { FROM.state_devastation_value > 50 } }
+                        set_temp_variable = { highlighted = 1 }
+                        
+                        # Boost red for highlight visibility
+                        add_to_temp_variable = { red = 0.05 }
+                    }
+                }
+                
+                set_temp_variable = { alpha = 1 }
+            }
+        }
+        
+        bottom = {
+            type = state
+            
+            color = {
+                # Darker base for stripes
+                set_temp_variable = { red = 0.65 }
+                set_temp_variable = { green = 0.60 }
+                set_temp_variable = { blue = 0.48 }
+                
+                if = {
+                    limit = { check_variable = { FROM.state_devastation_value > 0 } }
+                    
+                    set_temp_variable = { devastation_percent = FROM.state_devastation_value }
+                    divide_temp_variable = { devastation_percent = 100 }
+                    
+                    # Red channel: increases (0.65 → 0.75)
+                    set_temp_variable = { red_shift = devastation_percent }
+                    multiply_temp_variable = { red_shift = 0.10 }
+                    add_to_temp_variable = { red = red_shift }
+                    
+                    # Green channel: decreases heavily (0.60 → 0.08)
+                    set_temp_variable = { green_shift = devastation_percent }
+                    multiply_temp_variable = { green_shift = 0.52 }
+                    subtract_from_temp_variable = { green = green_shift }
+                    
+                    # Blue channel: decreases heavily (0.48 → 0.03)
+                    set_temp_variable = { blue_shift = devastation_percent }
+                    multiply_temp_variable = { blue_shift = 0.45 }
+                    subtract_from_temp_variable = { blue = blue_shift }
+                }
+                
+                set_temp_variable = { alpha = 1 }
+            }
+        }
+        
+        far_text = country
+        near_text = state
+        
+        tooltip = devastation_map_mode_tooltip
+        tooltip_delayed = devastation_map_mode_tooltip_delayed
+        
+        update_weekly = yes
+    }
+}

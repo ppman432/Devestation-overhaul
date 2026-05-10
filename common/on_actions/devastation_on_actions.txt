@@ -1,0 +1,499 @@
+on_actions = {
+
+	# MOD SETTINGS
+	on_startup = {
+		effect = {
+			# state devastation gain thresholds
+			# 	higher value means slower increase
+			#	a threshold of 0.00 means no changes to the base increase
+			# 	a threshold of 1.00 or higher means devastation can no longer increase
+			set_variable = { global.devastation_base_gain_threshold_1 = 0.00 }	# applies if devastation is < 10%		
+			set_variable = { global.devastation_base_gain_threshold_2 = 0.03 }	# applies if devastation is 10%-20%		# must also change the loc for SDFactors0Key1
+			set_variable = { global.devastation_base_gain_threshold_3 = 0.12 }	# applies if devastation is 20%-30%		# must also change the loc for SDFactors0Key2
+			set_variable = { global.devastation_base_gain_threshold_4 = 0.28 }	# applies if devastation is 30%-45%		# must also change the loc for SDFactors0Key3
+			
+			set_variable = { global.devastation_base_gain_threshold_5 = 0.45 }	# applies if devastation is 45%-60%		# must also change the loc for SDFactors0Key4
+			set_variable = { global.devastation_base_gain_threshold_6 = 0.62 }	# applies if devastation is 60%-75%		# must also change the loc for SDFactors0Key5
+			set_variable = { global.devastation_base_gain_threshold_7 = 0.75 }	# applies if devastation is 75%-85%		# must also change the loc for SDFactors0Key6
+			set_variable = { global.devastation_base_gain_threshold_8 = 0.86 }	# applies if devastation is 85%-95%		# must also change the loc for SDFactors0Key7
+			set_variable = { global.devastation_base_gain_threshold_9 = 0.93 }	# applies if devastation is > 95%		# must also change the loc for SDFactors0Key8
+			
+			# State category devastation gain multipliers
+			# These multiply the weekly devastation gain before thresholds are applied
+			set_variable = { global.devastation_state_category_megalopolis = 1.50 }  # +50%
+			set_variable = { global.devastation_state_category_metropolis = 1.25 }   # +25%
+			set_variable = { global.devastation_state_category_large_city = 1.10 }   # +10%
+			set_variable = { global.devastation_state_category_city = 1.00 }         # baseline
+			set_variable = { global.devastation_state_category_large_town = 0.90 }   # -10%
+			set_variable = { global.devastation_state_category_town = 0.75 }         # -25%
+			set_variable = { global.devastation_state_category_rural = 0.50 }        # -50%
+			set_variable = { global.devastation_state_category_pastoral = 0.30 }     # -70%
+			set_variable = { global.devastation_state_category_wasteland = 0.10 }    # -90%
+			
+			# 	state devastation daily increase
+			# 	higher value means faster increase
+			#   August 2025 update : recently multiplied the values by ~7 to turn it into weekly calculations & tweaked values for balance
+			
+			set_variable = { global.devastation_base_gain_resistance = 0.01 }						#  must also change the loc for SDFactors1Key
+			set_variable = { global.devastation_base_gain_controller_at_war_with_owner = 0.3 }	    #  must also change the loc for SDFactors2Key
+			set_variable = { global.devastation_base_gain_partial_occupation = 1.75 }				#  must also change the loc for SDFactors3Key
+			set_variable = { global.devastation_base_gain_neighbor_state_is_enemy = 0.25 }			#  must also change the loc for SDFactors4Key
+			set_variable = { global.devastation_base_gain_experienced_bombing = 1.5 }				#  must also change the loc for SDFactors5Key
+			set_variable = { global.devastation_base_gain_controller_at_peace_with_owner = -0.10 }	#  must also change the loc for SDFactors6Key
+			set_variable = { global.devastation_base_gain_controller_at_peace = -0.20 }				#  must also change the loc for SDFactors7Key
+			set_variable = { global.devastation_base_gain_siege = 1.25 }								#  must also change the loc for SDFactors10Key
+			
+			# max values for the state devastation ideas
+			# 	lower values mean harsher penalties
+			set_variable = { global.devastation_local_supplies = -0.50 }
+			set_variable = { global.devastation_local_factories = -0.50 }
+			set_variable = { global.devastation_local_building_slots_factor = -2.00 }
+			set_variable = { global.devastation_state_resources_factor = -0.90 }
+			set_variable = { global.devastation_state_production_speed_buildings_factor = -0.75 }
+			set_variable = { global.devastation_state_repair_speed_buildings_factor = -0.50 }
+			
+			set_variable = { global.devastation_state_division_speed = -0.35 }
+			set_variable = { global.devastation_state_organization_regain = -0.20 }
+			set_variable = { global.devastation_state_max_entrenchment = 0.25 }
+			## set_variable = { global.devastation_state_division_attrition = 0.15 }
+			
+			set_variable = { global.devastation_state_local_manpower = -0.25 }
+			set_variable = { global.devastation_state_local_non_core_manpower = -0.50 }
+			set_variable = { global.devastation_state_resistance_growth = 0.30 }
+			set_variable = { global.devastation_state_compliance_growth = -0.30 }
+			
+			# multipliers for national devastation score
+			# 	lower values mean harsher penalties
+			set_variable = { global.country_devastation_stability_factor = -0.7 }
+			set_variable = { global.country_devastation_war_support_factor = -1.00 }
+			set_variable = { global.country_devastation_political_power_factor = -0.55 }
+			set_variable = { global.country_devastation_research_speed_factor = -0.65 }
+			set_variable = { global.country_devastation_monthly_population = -1.00 }
+			set_variable = { global.country_devastation_production_factory_efficiency_gain_factor = -0.65 }
+			set_variable = { global.country_devastation_conscription_factor = -0.55 }
+			
+			# how much the refugee stability impact wears off monthly
+			# 	lower value means faster wearing off
+			set_variable = { global.monthly_refugee_stability_weekly = -0.5 }
+			
+			# the percentage of casualties that will be generated for every migration.
+			# 	higher value means more casualties, min should always be lower than max
+			# 	for example, if 1000 civilians will migrate, 450 to 600 civilians 
+			# 	will fail to migrate and become casualties.
+			set_variable = { global.casualty_multiplier_min = 0.12 }	# originally 0.45
+			set_variable = { global.casualty_multiplier_max = 0.60 }	# originally 0.6
+			
+			# pops assimilation
+			set_variable = { global.passive_assimilation_min = 0.01 }
+			set_variable = { global.passive_assimilation_max = 0.10 }
+			set_variable = { global.nationwide_drive_assimilation_min = 0.1 }
+			set_variable = { global.nationwide_drive_assimilation_max = 0.2 }
+			set_variable = { global.expel_refugees_min = 0.15 }
+			set_variable = { global.expel_refugees_max = 0.3 }
+			
+			# for every 0.1% unassimilated, have the following effects
+			set_variable = { global.unassimilated_stability_factor = -0.2 } # can only do up to one decimal point (0.X),not (0.XX or 0.XXX)
+			# when can the decision to expel be active
+			set_variable = { global.unassimilated_expel_minimum_stability_factor = -15 } # can only do up to one decimal point (0.X),not (0.XX or 0.XXX)
+			
+			# =====================================================================
+			# MASS EXODUS — DIMINISHING RETURNS SYSTEM
+			# =====================================================================
+			# Each successive state control change triggers a smaller exodus,
+			# reflecting that the most mobile population has already fled.
+			# Historical basis: Kharkov (flipped 4x), E. Prussia, Ukraine 1941-44.
+			#
+			# Flip tier base multipliers (state_control_changed_count before flip):
+			#   Flip 1 (count=0): 3.0  — full panic exodus, mobile population flees
+			#   Flip 2 (count=1): 2.2  — reduced; the easily-displaced already left
+			#   Flip 3 (count=2): 1.5  — mainly collaborators, soldiers' families
+			#   Flip 4 (count=3): 1.0  — dregs; elderly, deeply rooted locals
+			#   Flip 5 (count=4): 0.6  — near-ghost state; only stragglers remain
+			#   Flip 6+ (count=5+): 0.3 — negligible; state is effectively depopulated
+			set_variable = { global.exodus_multiplier_flip_1 = 3.0 }
+			set_variable = { global.exodus_multiplier_flip_2 = 2.2 }
+			set_variable = { global.exodus_multiplier_flip_3 = 1.5 }
+			set_variable = { global.exodus_multiplier_flip_4 = 1.0 }
+			set_variable = { global.exodus_multiplier_flip_5 = 0.6 }
+			set_variable = { global.exodus_multiplier_flip_6plus = 0.3 }
+			#
+			# Devastation intensity factor (lerp between min and max):
+			#   At 0% dev:   exodus * factor_min (lightning capture still causes some flight)
+			#   At 100% dev: exodus * factor_max (full-scale destruction = full multiplier)
+			set_variable = { global.exodus_devastation_factor_min = 0.35 }
+			set_variable = { global.exodus_devastation_factor_max = 1.00 }
+			#
+			# Exodus-specific population draw multiplier.
+			# Normal core_multiplier (0.01-0.10) is for weekly passive migration (slow trickle).
+			# During mass exodus, a much larger fraction flees in a single event.
+			# Non-core: less loyalty to regime, more flee (Kharkov, East Prussia)
+			# Core: homeland attachment, fewer flee (Warsaw defenders, Moscow)
+			set_variable = { global.exodus_core_mult_noncore_min = 0.10 }   # volume knob — lower to reduce exodus output
+			set_variable = { global.exodus_core_mult_noncore_max = 0.25 }
+			set_variable = { global.exodus_core_mult_iscore_min  = 0.05 }   # core territory (homeland attachment)
+			set_variable = { global.exodus_core_mult_iscore_max  = 0.10 }
+			#
+			# Casualty rates during exodus — scaled by devastation level.
+			# Historical basis:
+			#   France Exode 1940 (5% dev, summer, intact roads):       ~1.5%
+			#   Kharkov multiple flips (contested city):                 ~6.7%
+			#   Stalingrad Volga evacuation (bombed, chaotic):           ~10%
+			#   East Prussia Treck Jan 1945 (winter, Red Army pursuing): ~15%
+			#   Anatolia 1922 (death marches, deliberate — extreme):     ~25%
+			# Tier 1: dev  0-20%  — swift capture, organized flight, infrastructure intact
+			set_variable = { global.casualty_exodus_mult_t1_min = 0.02 }
+			set_variable = { global.casualty_exodus_mult_t1_max = 0.07 }
+			# Tier 2: dev 20-50%  — contested, partial infrastructure collapse
+			set_variable = { global.casualty_exodus_mult_t2_min = 0.05 }
+			set_variable = { global.casualty_exodus_mult_t2_max = 0.13 }
+			# Tier 3: dev 50-75%  — heavy bombing, roads destroyed, possible winter
+			set_variable = { global.casualty_exodus_mult_t3_min = 0.09 }
+			set_variable = { global.casualty_exodus_mult_t3_max = 0.20 }
+			# Tier 4: dev 75-100% — total collapse, active combat during flight
+			set_variable = { global.casualty_exodus_mult_t4_min = 0.14 }
+			set_variable = { global.casualty_exodus_mult_t4_max = 0.28 }
+			# =====================================================================
+			
+			 
+			# Nuke casualty multipliers by state category (ALSO USED FOR DEVASTATION)
+			set_variable = { global.nuke_casualty_megalopolis = 1.50 }      # +50% casualties & devastation
+			set_variable = { global.nuke_casualty_metropolis = 1.25 }       # +25% casualties & devastation
+			set_variable = { global.nuke_casualty_large_city = 1.10 }       # +10% casualties & devastation
+			set_variable = { global.nuke_casualty_city = 1.00 }             # baseline
+			set_variable = { global.nuke_casualty_large_town = 0.85 }       # -15% casualties & devastation
+			set_variable = { global.nuke_casualty_town = 0.70 }             # -30% casualties & devastation
+			set_variable = { global.nuke_casualty_rural = 0.50 }            # -50% casualties & devastation
+			set_variable = { global.nuke_casualty_pastoral = 0.35 }         # -65% casualties & devastation
+			set_variable = { global.nuke_casualty_wasteland = 0.20 }        # -80% casualties & devastation
+			
+			# how much casualties per nuke in a state
+			## Fission Nuke (Hiroshima Style)
+			set_variable = { global.nuke_population_multiplier_min = 0.05 } # 5% of the population
+			set_variable = { global.nuke_population_multiplier_max = 0.15 } # 15% of the population
+			
+			## Fusion Nuke (Thermonuclear Ivy Mike Style)
+			set_variable = { global.thermo_nuke_population_multiplier_min = 0.25 } # 25% of the population
+			set_variable = { global.thermo_nuke_population_multiplier_max = 0.65 } # 65% of the population
+			
+			# Maximum population that can be killed by a single nuke
+			set_variable = { global.nuke_max_population_kill_rate = 0.90 } # 90% maximum
+		}
+	}
+
+	on_startup = {
+		effect = {
+			#random_country = {
+			#	#news_event = devastation_news.0
+			#	news_event = devastation_news.1
+			#	#news_event = devastation_news.2
+			#}
+			every_state = {
+				add_dynamic_modifier = {
+					modifier = state_devastation_modifier
+				}
+				set_variable = { state_devastation_value = 0 }
+			}
+			every_country = {
+				add_dynamic_modifier = {
+					modifier = country_devastation_modifier
+				}
+				# Default warfare stance: Standard (civ_mult = 1.0, no dynamic modifier)
+				set_variable = { warfare_stance_civ_mult = 1.0 }
+				set_variable = { warfare_stance_dev_mult = 1.0 }
+				set_country_flag = bm_conduct_standard_active
+				# Default refugee policy: Neutral
+				set_country_flag = bm_refugees_neutral
+			}
+		}
+	}
+	
+	## Used to be daily, but now weekly for performance
+	on_weekly = {
+		effect = {
+			every_controlled_state = {
+				limit = {
+                    OR = {
+                        # 1. Very Fast (3ms) - Immediate fail if country is at peace/stable
+                        NOT = { is_controlled_by = owner } 
+
+                        # 2. Fast (5ms) - Caught during air campaigns
+                        has_recently_experienced_strat_bombing = yes 
+
+                        # 3. Fast (6ms) - Simple variable check
+                        check_variable = { state_devastation_value > 0 } 
+
+                        # 4. Fast (9ms) - Occurs in occupied lands
+                        has_resistance = yes 
+
+                        # 5. Gatekeeper: Only run heavy combat logic if the controller is actually at war
+                        # This prevents the 59ms and 116ms checks from running for neutral nations.
+                        AND = {
+                            controller = { has_war = yes }
+                            OR = {
+                                state_is_besieged = yes             # 19ms
+                                state_is_combat_bubble = yes        # 33ms
+                                state_isnt_fully_controlled_owner = yes # 59ms
+                                neighbor_state_has_direct_war = yes # 116ms
+                            }
+                        }
+                    }
+                }
+				calc_pop_change = yes
+				devastation_state_calc_value = yes
+				clamp_variable = { var = state_devastation_value min = 0 max = 100 }
+			}
+			
+			calc_total_external_refugees_in_game = yes
+			devastation_country_calc_value = yes
+			devastation_country_calc_modifiers = yes
+			devastation_country_calc_unassimilated = yes
+			calc_casualties = yes
+			
+			if = {
+				limit = {
+					NOT = { has_decision = assimilation_passive_decision } 
+					any_controlled_state = {
+						has_unassimilated_pops = yes
+					}
+				}
+				activate_decision = assimilation_passive_decision
+			}
+		}
+
+		# =====================================================================
+	}
+	
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = { has_war = yes }
+
+				set_temp_variable = { global.state_original_controller = FROM.ID }
+
+				FROM.FROM = {
+					# =========================================================
+					# Step 1: Base multiplier from flip tier.
+					# state_control_changed_count read BEFORE add_to_variable,
+					# so count=0 means first time captured.
+					# =========================================================
+					if = {
+						limit = { check_variable = { state_control_changed_count < 1 } }
+						set_temp_variable = { exodus_migration = global.exodus_multiplier_flip_1 }
+					}
+					else_if = {
+						limit = { check_variable = { state_control_changed_count < 2 } }
+						set_temp_variable = { exodus_migration = global.exodus_multiplier_flip_2 }
+					}
+					else_if = {
+						limit = { check_variable = { state_control_changed_count < 3 } }
+						set_temp_variable = { exodus_migration = global.exodus_multiplier_flip_3 }
+					}
+					else_if = {
+						limit = { check_variable = { state_control_changed_count < 4 } }
+						set_temp_variable = { exodus_migration = global.exodus_multiplier_flip_4 }
+					}
+					else_if = {
+						limit = { check_variable = { state_control_changed_count < 5 } }
+						set_temp_variable = { exodus_migration = global.exodus_multiplier_flip_5 }
+					}
+					else = {
+						set_temp_variable = { exodus_migration = global.exodus_multiplier_flip_6plus }
+					}
+
+					# =========================================================
+					# Step 2: Devastation intensity factor (lerp).
+					# factor = factor_min + (factor_max - factor_min) * (dev/100)
+					# At 0% dev -> *0.35 floor, at 100% dev -> *1.0 ceiling
+					# =========================================================
+					set_temp_variable = { exodus_dev_range = global.exodus_devastation_factor_max }
+					subtract_from_temp_variable = { exodus_dev_range = global.exodus_devastation_factor_min }
+					set_temp_variable = { exodus_dev_pct = state_devastation_value }
+					divide_temp_variable = { exodus_dev_pct = 100 }
+					multiply_temp_variable = { exodus_dev_range = exodus_dev_pct }
+					set_temp_variable = { exodus_dev_factor = global.exodus_devastation_factor_min }
+					add_to_temp_variable = { exodus_dev_factor = exodus_dev_range }
+					multiply_temp_variable = { exodus_migration = exodus_dev_factor }
+
+					# =========================================================
+					# Step 3: Flag as exodus event for devastation_state_trigger_migration.
+					# Replaces old sentinel check (exodus_migration == 3.0) which
+					# breaks with dynamic multiplier values.
+					# =========================================================
+					set_temp_variable = { is_exodus_event = 1 }
+
+					# =========================================================
+					# Step 4: Fire effects. Counter increments LAST so Step 1
+					# reads the pre-flip value.
+					# =========================================================
+					migration_get_chance = yes
+					devastation_state_trigger_migration = yes
+					devastation_state_trigger_factory_migration_on_capture = yes
+					add_to_variable = { state_control_changed_count = 1 }
+				}				
+				# Factory migration must run in STATE scope (FROM), not country scope (FROM.FROM)
+				# state_devastation_value, arms_factory etc. are state variables
+			}
+			
+		}
+	}
+	
+	on_nuke_drop = {
+		effect = {
+			FROM = {
+				## owner = { add_war_support = -0.1 }
+				
+				# DIFFERENTIATE CASUALTIES BY NUKE TYPE
+				if = {
+					limit = { has_dynamic_modifier = { modifier = fallout_thermonuclear } }
+					# Thermonuclear casualties: 25-65%
+					set_temp_variable_to_random = { var = random_rate min = global.thermo_nuke_population_multiplier_min max = global.thermo_nuke_population_multiplier_max }
+				}
+				else = {
+					# Normal nuke casualties: 5-15%
+					set_temp_variable_to_random = { var = random_rate min = global.nuke_population_multiplier_min max = global.nuke_population_multiplier_max }
+				}
+				
+				# Apply state category multiplier to casualty rate
+				if = {
+					limit = { is_megalopolis_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_megalopolis }
+				}
+				else_if = {
+					limit = { is_metropolis_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_metropolis }
+				}
+				else_if = {
+					limit = { is_large_city_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_large_city }
+				}
+				else_if = {
+					limit = { is_city_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_city }
+				}
+				else_if = {
+					limit = { is_large_town_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_large_town }
+				}
+				else_if = {
+					limit = { is_town_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_town }
+				}
+				else_if = {
+					limit = { is_rural_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_rural }
+				}
+				else_if = {
+					limit = { is_pastoral_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_pastoral }
+				}
+				else_if = {
+					limit = { is_wasteland_state = yes }
+					multiply_temp_variable = { random_rate = global.nuke_casualty_wasteland }
+				}
+				
+				# Cap at 90% maximum kill rate
+				set_temp_variable = { max_kill_rate = global.nuke_max_population_kill_rate }
+				if = {
+					limit = { check_variable = { random_rate > max_kill_rate } }
+					set_temp_variable = { random_rate = max_kill_rate }
+				}
+				
+				set_temp_variable = { state_pop_deaths = state_population_k }
+				multiply_temp_variable = { state_pop_deaths = random_rate }
+				multiply_temp_variable = { state_pop_deaths = 1000 }
+				
+				if = {
+					limit = { check_variable = { state_population_k > 50 } }
+					set_temp_variable_to_random = { var = temp_casualty min = 30000 max = 50000 }
+				}
+				else_if = {
+					limit = { check_variable = { state_population_k > 30 } }
+					set_temp_variable_to_random = { var = temp_casualty min = 10000 max = 30000 }
+				}
+				else_if = {
+					limit = { check_variable = { state_population_k > 10 } }
+					set_temp_variable_to_random = { var = temp_casualty min = 1000 max = 10000 }
+				}
+				add_to_temp_variable = { temp_casualty = state_pop_deaths }
+				divide_temp_variable = { temp_casualty = 1000 }
+				add_to_variable = { devastation_state_casualties = temp_casualty }
+				
+				multiply_temp_variable = { temp_casualty = -1000 }
+				add_manpower = temp_casualty
+				
+				set_temp_variable = { global.civ_casualty_gain = temp_casualty }
+				owner = {
+					set_temp_variable = { temp = global.civ_casualty_gain }
+					log = "[THIS.GetTag]: Civ Casualties Gain - [?global.civ_casualty_gain]"
+					add_civ_casualties_to_owner = yes
+				}
+				calc_pop_change = yes
+		
+				# DEVASTATION DIFFERENTIATION
+				if = {
+					limit = { has_dynamic_modifier = { modifier = fallout_thermonuclear } }
+					# Thermonuclear: 45-90% devastation
+					set_temp_variable_to_random = { var = nuke_devastation min = 45 max = 90 }
+					set_temp_variable_to_random = { var = nuke_severity min = 3 max = 10 }
+				}
+				else = {
+					# Normal nuke: 10-35% devastation
+					set_temp_variable_to_random = { var = nuke_devastation min = 10 max = 35 }
+					set_temp_variable_to_random = { var = nuke_severity min = 1 max = 3 }
+				}
+				
+				# Apply state category multiplier to devastation (SAME AS CASUALTIES)
+				if = {
+					limit = { is_megalopolis_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_megalopolis }
+				}
+				else_if = {
+					limit = { is_metropolis_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_metropolis }
+				}
+				else_if = {
+					limit = { is_large_city_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_large_city }
+				}
+				else_if = {
+					limit = { is_city_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_city }
+				}
+				else_if = {
+					limit = { is_large_town_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_large_town }
+				}
+				else_if = {
+					limit = { is_town_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_town }
+				}
+				else_if = {
+					limit = { is_rural_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_rural }
+				}
+				else_if = {
+					limit = { is_pastoral_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_pastoral }
+				}
+				else_if = {
+					limit = { is_wasteland_state = yes }
+					multiply_temp_variable = { nuke_devastation = global.nuke_casualty_wasteland }
+				}
+				
+				add_to_variable = { state_devastation_value = nuke_devastation }
+				clamp_variable = { var = state_devastation_value min = 0 max = 100 }
+				
+				set_temp_variable = { var = count value = nuke_severity }
+				remove_building = { type = infrastructure level = nuke_severity }
+				remove_building = { type = arms_factory level = nuke_severity }
+				remove_building = { type = industrial_complex level = nuke_severity }
+				remove_building = { type = dockyard level = nuke_severity }
+				remove_building = { type = air_base level = nuke_severity }
+				remove_building = { type = radar_station level = nuke_severity }
+				remove_building = { type = anti_air_building level = nuke_severity }
+				remove_building = { type = synthetic_refinery level = nuke_severity }
+				remove_building = { type = rocket_site level = nuke_severity }
+			}
+		}
+	}
+}

@@ -1,0 +1,104 @@
+on_actions = {
+	on_weekly = {
+		effect = {
+			if = {
+				limit = { has_war = yes }
+			
+				# =====================================================================
+				# MILITARY CASUALTIES — WEEKLY DELTA TRACKER
+				# =====================================================================
+				# casualties_k is HOI4's native variable — resets to 0 on war end.
+				# casualties_calculated_deaths_k tracks the last known value.
+				# Each week we compute the delta (new casualties since last tick),
+				# remove that manpower from states proportionally, and accumulate
+				# 30% of the delta into persistent_mil_casualties_k (actual deaths).
+				#
+				# 30% KIA rate: historically ~25-30% of casualties are deaths.
+				# The remaining 70% are wounded/captured (handled by HOI4 recovery).
+				#
+				# persistent_mil_casualties_k: never resets, survives war end.
+				# This is what the casualty table military column displays.
+				# =====================================================================
+				
+				if = {
+					limit = {
+						check_variable = { casualties_k > casualties_calculated_deaths_k }
+					}
+					
+					# Delta = new casualties this week
+					set_variable = { casualties_civs_to_be_removed_k = casualties_k }
+					subtract_from_variable = { casualties_civs_to_be_removed_k = casualties_calculated_deaths_k }
+					
+					# Catch up tracker
+					add_to_variable = { casualties_calculated_deaths_k = casualties_civs_to_be_removed_k }
+					
+					# 30% of casualties = actual deaths distributed to state populations
+					# Wounded recover and return — only the dead permanently reduce population
+					set_variable = { casualties_civs_to_be_removed = casualties_civs_to_be_removed_k }
+					multiply_variable = { casualties_civs_to_be_removed = 0.30 }
+					multiply_variable = { casualties_civs_to_be_removed = 1000 }
+					
+					# =====================================================================
+					# PERSISTENT DEATH COUNTER — 30% of casualties = actual deaths
+					# Lower/raise the 0.30 multiplier to adjust the KIA rate.
+					# =====================================================================
+					set_temp_variable = { mil_deaths_delta = casualties_civs_to_be_removed_k }
+					multiply_temp_variable = { mil_deaths_delta = 0.30 }
+					add_to_variable = { persistent_mil_casualties_k = mil_deaths_delta }
+					
+					# =====================================================================
+					# STEP 1: Calculate total population across owned/core states.
+					# This is the correct denominator — fractions sum to exactly 1.0.
+					# Using max_manpower_k was wrong: it's recruitable pool (~3000k for
+					# Germany) not total population (~70000k), causing a ~23x multiplier
+					# that depopulated states catastrophically.
+					# =====================================================================
+					set_variable = { casualties_total_pop_k = 0 }
+					every_state = {
+						limit = {
+							OR = {
+								is_core_of = ROOT
+								is_owned_by = ROOT
+							}
+						}
+						add_to_variable = { ROOT.casualties_total_pop_k = state_population_k }
+					}
+					
+					# =====================================================================
+					# STEP 2: Distribute proportionally using total pop as denominator.
+					# No clamping needed — fractions naturally sum to 1.0.
+					# Gate on total_pop_k > 0 to avoid division by zero edge case.
+					# =====================================================================
+					if = {
+						limit = { check_variable = { casualties_total_pop_k > 0 } }
+						every_state = {
+							limit = {
+								OR = {
+									is_core_of = ROOT
+									is_owned_by = ROOT
+								}
+							}
+							set_variable = { casualties_civs_percent_for_state = state_population_k }
+							divide_variable = { casualties_civs_percent_for_state = ROOT.casualties_total_pop_k }
+							set_variable = { casualties_civs_to_be_removed_for_state = ROOT.casualties_civs_to_be_removed }
+							multiply_variable = { casualties_civs_to_be_removed_for_state = casualties_civs_percent_for_state }
+							round_variable = casualties_civs_to_be_removed_for_state
+							multiply_variable = { casualties_civs_to_be_removed_for_state = -1 }
+							add_manpower = casualties_civs_to_be_removed_for_state
+						}
+					}
+				}
+				
+				# War ended — casualties_k reset to 0 by HOI4.
+				# Reset tracker to 0 so next week's delta starts clean.
+				# persistent_mil_casualties_k is untouched — keeps the cumulative total.
+				if = {
+					limit = {
+						check_variable = { casualties_calculated_deaths_k > casualties_k }
+					}
+					set_variable = { casualties_calculated_deaths_k = casualties_k }
+				}
+			}
+		}
+	}
+}

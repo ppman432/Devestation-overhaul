@@ -1,0 +1,9 @@
+categories = {
+
+	devastation_strategic_bombing_category = {
+		intel_source = air
+		visible = { has_dlc = "Gotterdammerung" }
+		# Allow free province targeting (like nukes)
+		free_targeting = yes
+	}
+}

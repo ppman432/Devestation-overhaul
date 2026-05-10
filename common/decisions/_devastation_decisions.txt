@@ -1,0 +1,1331 @@
+devastation_decisions = {
+
+	# =========================================================
+	# WARTIME DECISIONS
+	# =========================================================
+
+	devastation_emergency_repairs = {
+		icon = generic_construction
+		
+		cancel_if_not_visible = yes
+		visible = {
+			has_war = yes
+		}
+
+		available = {
+			has_war = yes
+			any_controlled_state = {
+				has_state_devastation = yes
+			}
+			has_damaged_buildings = yes
+		}
+
+		ai_will_do = {
+			factor = 30
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				surrender_progress > 0.3
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 100
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_state_devastation = yes
+						is_core_of = ROOT
+					}
+				}
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_capital = yes
+				}
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_core_of = ROOT
+					check_variable = { state_devastation_value > 50 }
+				}
+			}
+			modifier = {
+				factor = 3
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_capital = yes
+					check_variable = { state_devastation_value > 40 }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_core_of = ROOT
+					OR = {
+						industrial_complex > 5
+						arms_factory > 5
+					}
+				}
+			}
+		}
+
+		cost = 25
+		days_remove = 90
+		days_re_enable = 45
+		
+		modifier = { 
+			state_devastation_reduction = -0.07
+		}
+	}
+
+	devastation_evacuation_orders = {
+		icon = eng_propaganda_campaigns
+		
+		cancel_if_not_visible = yes
+		visible = {
+			has_war = yes
+		}
+
+		available = {
+			has_war = yes
+			any_controlled_state = {
+				has_state_devastation = yes
+				days_since_last_strategic_bombing < 14
+			}
+		}
+
+		ai_will_do = {
+			factor = 25
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				surrender_progress > 0.4
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 200
+			}
+			modifier = {
+				factor = 0
+				political_power_daily < 1
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_state_devastation = yes
+						days_since_last_strategic_bombing < 7
+						is_core_of = ROOT
+					}
+				}
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 3
+				any_controlled_state = {
+					has_state_devastation = yes
+					days_since_last_strategic_bombing < 3
+					is_capital = yes
+				}
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					days_since_last_strategic_bombing < 7
+					is_core_of = ROOT
+					OR = {
+						industrial_complex > 3
+						arms_factory > 3
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					days_since_last_strategic_bombing < 14
+					check_variable = { state_devastation_value > 50 }
+					is_core_of = ROOT
+				}
+			}
+		}
+
+		cost = 50
+		days_remove = 30
+		days_re_enable = 15
+		
+		modifier = { 
+			political_power_cost = 0.10
+			state_devastation_reduction_factor = -0.25 
+		}
+	}
+
+	devastation_rapid_response_teams = {
+		icon = generic_intelligence_operation
+		
+		cancel_if_not_visible = yes
+		visible = {
+			has_war = yes
+		}
+
+		available = {
+			has_war = yes
+			any_controlled_state = {
+				has_state_devastation = yes
+			}
+			has_manpower > 1000
+		}
+
+		ai_will_do = {
+			factor = 30
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				command_power < 80
+			}
+			modifier = {
+				factor = 0
+				surrender_progress > 0.5
+			}
+			modifier = {
+				factor = 0
+				political_power_daily < 1
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_state_devastation = yes
+						is_core_of = ROOT
+					}
+				}
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 0.5
+				command_power < 150
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_core_of = ROOT
+					OR = {
+						industrial_complex > 3
+						arms_factory > 3
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_capital = yes
+				}
+			}
+			modifier = {
+				factor = 1.5
+				any_controlled_state = {
+					has_state_devastation = yes
+					check_variable = { state_devastation_value > 50 }
+					is_core_of = ROOT
+				}
+			}
+		}
+
+		days_remove = 30
+		days_re_enable = 15
+		
+		custom_cost_trigger = {
+			command_power > 19
+		}
+		custom_cost_text = decision_cost_CP_10
+		
+		complete_effect = {
+			hidden_effect = {
+				add_command_power = -20
+			}
+		}
+		
+		modifier = { 
+			political_power_cost = 0.10
+			state_devastation_reduction_factor = -0.2 
+		}
+	}
+
+	# =========================================================
+	# PEACETIME NATIONAL DECISIONS
+	# =========================================================
+
+	devastation_national_infrastructure_investment = {
+		icon = generic_electricity
+		
+		cancel_if_not_visible = yes
+		visible = {
+			has_war = no
+		}
+
+		available = {
+			has_war = no
+			any_controlled_state = {
+				has_state_devastation = yes
+			}
+		}
+
+		ai_will_do = {
+			factor = 50
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				has_political_power < 400
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 10
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_war_support < 0.5
+					has_stability < 0.5
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_state_devastation = yes
+						is_core_of = ROOT
+					}
+				}
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 2
+				num_of_civilian_factories_available_for_projects > 25
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_capital = yes
+				}
+			}
+			modifier = {
+				factor = 2
+				count_triggers = {
+					amount > 4
+					any_controlled_state = { has_state_devastation = yes is_core_of = ROOT }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_core_of = ROOT
+					check_variable = { state_devastation_value > 50 }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_core_of = ROOT
+					OR = {
+						industrial_complex > 5
+						arms_factory > 3
+					}
+				}
+			}
+		}
+
+		days_remove = 180
+		days_re_enable = 90
+		
+		custom_cost_trigger = {
+			num_of_civilian_factories_available_for_projects > 9
+			has_political_power > 149
+		}
+		custom_cost_text = decision_cost_civ_factory_5_PP_150
+		
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -150
+			}
+		}
+		
+		modifier = { 
+			civilian_factory_use = 10
+			repair_speed_infrastructure_factor = 0.30 
+			state_production_speed_infrastructure_factor = 0.20
+			state_devastation_reduction = -0.20
+		}
+		
+		remove_effect = {
+			random_controlled_state = {
+				limit = { has_state_devastation = yes infrastructure < 5 }
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_controlled_state = {
+				limit = { has_state_devastation = yes infrastructure < 5 }
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	devastation_relief_fund_allocation = {
+		icon = generic_consumer_goods
+		
+		cancel_if_not_visible = yes
+		visible = {
+			has_war = no
+		}
+
+		available = {
+			has_war = no
+			any_controlled_state = {
+				has_state_devastation = yes
+			}
+		}
+
+		ai_will_do = {
+			factor = 40
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				has_political_power < 250
+			}
+			modifier = {
+				factor = 0
+				has_idea = undisturbed_isolation
+			}
+			modifier = {
+				factor = 0
+				has_idea = isolation
+			}
+			modifier = {
+				factor = 0
+				consumer_goods_factor > 0.35
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.5
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_state_devastation = yes
+						is_core_of = ROOT
+					}
+				}
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 0.5
+				num_of_civilian_factories_available_for_projects < 20
+			}
+			modifier = {
+				factor = 2
+				count_triggers = {
+					amount > 2
+					any_controlled_state = { has_state_devastation = yes is_core_of = ROOT }
+				}
+			}
+			modifier = {
+				factor = 2
+				count_triggers = {
+					amount > 5
+					any_controlled_state = { has_state_devastation = yes is_core_of = ROOT }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_capital = yes
+				}
+			}
+		}
+
+		cost = 75
+		days_remove = 60
+		days_re_enable = 30
+		
+		modifier = { 
+			consumer_goods_factor = 0.1
+			state_devastation_reduction_factor = -0.2 
+		}
+		
+		remove_effect = {
+			every_controlled_state = {
+				limit = { has_state_devastation = yes }
+				set_temp_variable = { temp = -1.0 }
+				devastation_state_change_value = yes
+			}
+		}
+	}
+
+	devastation_public_works_initiative = {
+		icon = generic_factory
+		
+		cancel_if_not_visible = yes
+		visible = {
+			has_war = no
+		}
+
+		available = {
+			has_war = no
+			any_controlled_state = {
+				has_state_devastation = yes
+			}
+		}
+
+		ai_will_do = {
+			factor = 60
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				has_political_power < 300
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 7
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_war_support < 0.4
+					has_stability < 0.4
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_state_devastation = yes
+						is_core_of = ROOT
+					}
+				}
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_capital = yes
+				}
+			}
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_state_devastation = yes
+					is_core_of = ROOT
+					OR = {
+						industrial_complex > 3
+						arms_factory > 2
+					}
+				}
+			}
+			modifier = {
+				factor = 1.5
+				num_of_civilian_factories_available_for_projects > 20
+			}
+			modifier = {
+				factor = 1.5
+				count_triggers = {
+					amount > 3
+					any_controlled_state = { has_state_devastation = yes is_core_of = ROOT }
+				}
+			}
+		}
+
+		days_remove = 120
+		days_re_enable = 60
+		
+		custom_cost_trigger = {
+			num_of_civilian_factories_available_for_projects > 4
+			has_political_power > 99
+		}
+		custom_cost_text = decision_cost_civ_factory_3_PP_100
+		
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -100
+			}
+		}
+		
+		modifier = { 
+			civilian_factory_use = 5
+			industry_repair_factor = 0.3
+			state_devastation_reduction = -0.07
+		}
+		
+		remove_effect = {
+			every_controlled_state = {
+				limit = { has_state_devastation = yes }
+				set_temp_variable = { temp = -2.0 }
+				devastation_state_change_value = yes
+			}
+		}
+	}
+	
+	devastation_funding_allies = {
+		icon = ger_mefo_bills
+		visible = {
+			has_war = no
+		}
+
+		available = {
+			has_war = no
+			FROM = {
+				any_controlled_state = {
+					has_state_devastation = yes
+				}
+			}
+			OR = {
+				FROM = { is_ally_with = ROOT }
+				ROOT = {
+					has_opinion = {
+						target = FROM
+						value > 50
+					}
+				}
+			}
+		}
+		
+		target_array = global.countries
+		target_trigger = {
+			OR = {
+				FROM = { is_ally_with = ROOT }
+				ROOT = {
+					has_opinion = {
+						target = FROM
+						value > 50
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 20
+
+			# Hard blocks
+			modifier = {
+				factor = 0
+				has_political_power < 200
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 15
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					FROM = { is_major = yes }
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					FROM = { is_in_faction_with = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				has_war_support < 0.5
+			}
+			modifier = {
+				factor = 0
+				political_power_daily < 0.5
+			}
+
+			# Scaling weights
+			modifier = {
+				factor = 2
+				FROM = { is_faction_leader = yes }
+			}
+			modifier = {
+				factor = 1.5
+				has_opinion = {
+					target = FROM
+					value > 100
+				}
+			}
+			modifier = {
+				factor = 1.5
+				count_triggers = {
+					amount > 4
+					FROM = { any_controlled_state = { has_state_devastation = yes } }
+				}
+			}
+			modifier = {
+				factor = 2
+				count_triggers = {
+					amount > 8
+					FROM = { any_controlled_state = { has_state_devastation = yes } }
+				}
+			}
+		}
+
+		days_remove = 180
+		days_re_enable = 60
+		
+		custom_cost_trigger = {
+			num_of_civilian_factories_available_for_projects > 9
+			has_political_power > 49
+		}
+		custom_cost_text = decision_cost_civ_factory_5_PP_20
+		
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = devastation_funding_allies_cancel_trigger
+				NOT = {
+					FROM = { is_ally_with = ROOT }
+					ROOT = {
+						has_opinion = {
+							target = FROM
+							value > 100
+						}
+					}
+				}
+			}
+		}
+		
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -50
+			}
+		}
+		
+		modifier = { 
+			civilian_factory_use = 10
+			political_power_gain = 0.1
+		}
+		
+		remove_effect = {
+			if = {
+				limit = { 
+					FROM = {
+						any_controlled_state = {
+							has_state_devastation = yes
+						}
+					}
+				}
+				FROM = {
+					every_controlled_state = {
+						limit = { has_state_devastation = yes }
+						set_temp_variable = { temp = -6.0 }
+						devastation_state_change_value = yes
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = devastation_funding_allies_tt
+			}
+		}
+	}
+
+	# =========================================================
+	# PEACETIME STATE-TARGETED DECISIONS
+	# Hide / Show toggle
+	# =========================================================
+
+	devastation_reconstruction_hide = {
+		icon = infiltrate_state
+
+		visible = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+			any_controlled_state = { has_state_devastation = yes }
+		}
+
+		available = {
+			always = yes
+		}
+
+		complete_effect = {
+			set_country_flag = devastation_reconstruction_hidden
+		}
+	}
+
+	devastation_reconstruction_show = {
+		icon = infiltrate_state
+
+		visible = {
+			has_country_flag = devastation_reconstruction_hidden
+		}
+
+		available = {
+			always = yes
+		}
+
+		complete_effect = {
+			clr_country_flag = devastation_reconstruction_hidden
+		}
+	}
+
+	# =========================================================
+	# Prioritize Reconstruction — Small States
+	# Targets: pastoral / rural / town category states
+	# Cost: 3 civs | 50 PP | 90 days | re-enable: 30 days
+	# =========================================================
+	devastation_reconstruction_focus_small = {
+		icon = generic_construction
+		state_target = any_controlled_state
+		on_map_mode = map_only
+		fire_only_once = no
+
+		days_remove = 90
+		days_re_enable = 30
+
+		target_root_trigger = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+		}
+
+		target_trigger = {
+			FROM = {
+				has_state_devastation = yes
+				impassable = no
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_pastoral_state = yes
+					is_rural_state = yes
+					is_town_state = yes
+				}
+			}
+		}
+
+		visible = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+		}
+
+		available = {
+			has_war = no
+			num_of_civilian_factories_available_for_projects > 2
+			has_political_power > 49
+			FROM = {
+				has_state_devastation = yes
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -50
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				set_temp_variable = { temp = -3.0 }
+				devastation_state_change_value = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+
+			modifier = {
+				factor = 0
+				surrender_progress > 0.1
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 100
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 5
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					NOT = { is_core_of = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					NOT = { is_owned_and_controlled_by = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_stability < 0.4
+					has_war_support < 0.4
+				}
+			}
+
+			modifier = {
+				factor = 2
+				FROM = { is_capital = yes }
+			}
+			modifier = {
+				factor = 2
+				FROM = {
+					OR = {
+						industrial_complex > 2
+						arms_factory > 2
+					}
+				}
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { check_variable = { state_devastation_value > 50 } }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { state_strategic_value > 5 }
+			}
+			modifier = {
+				factor = 1.5
+				num_of_civilian_factories_available_for_projects > 15
+			}
+		}
+	}
+
+	# =========================================================
+	# Prioritize Reconstruction — Medium States
+	# Targets: large_town / city category states
+	# Cost: 7 civs | 75 PP | 90 days | re-enable: 30 days
+	# =========================================================
+	devastation_reconstruction_focus_medium = {
+		icon = generic_construction
+		state_target = any_controlled_state
+		on_map_mode = map_only
+		fire_only_once = no
+
+		days_remove = 90
+		days_re_enable = 30
+
+		target_root_trigger = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+		}
+
+		target_trigger = {
+			FROM = {
+				has_state_devastation = yes
+				impassable = no
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_large_town_state = yes
+					is_city_state = yes
+				}
+			}
+		}
+
+		visible = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+		}
+
+		available = {
+			has_war = no
+			num_of_civilian_factories_available_for_projects > 6
+			has_political_power > 74
+			FROM = {
+				has_state_devastation = yes
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 7
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -75
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				set_temp_variable = { temp = -4.0 }
+				devastation_state_change_value = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+
+			modifier = {
+				factor = 0
+				surrender_progress > 0.1
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 150
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 10
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					NOT = { is_core_of = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					NOT = { is_owned_and_controlled_by = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_stability < 0.45
+					has_war_support < 0.45
+				}
+			}
+
+			modifier = {
+				factor = 3
+				FROM = { is_capital = yes }
+			}
+			modifier = {
+				factor = 2
+				FROM = {
+					OR = {
+						industrial_complex > 4
+						arms_factory > 3
+					}
+				}
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { check_variable = { state_devastation_value > 50 } }
+			}
+			modifier = {
+				factor = 2
+				FROM = { state_strategic_value > 8 }
+			}
+			modifier = {
+				factor = 1.5
+				num_of_civilian_factories_available_for_projects > 20
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { is_core_of = ROOT }
+			}
+		}
+	}
+
+	# =========================================================
+	# Prioritize Reconstruction — Large States
+	# Targets: large_city / metropolis / megalopolis category states
+	# Cost: 12 civs | 100 PP | 90 days | re-enable: 30 days
+	# =========================================================
+	devastation_reconstruction_focus_large = {
+		icon = generic_construction
+		state_target = any_controlled_state
+		on_map_mode = map_only
+		fire_only_once = no
+
+		days_remove = 90
+		days_re_enable = 30
+
+		target_root_trigger = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+		}
+
+		target_trigger = {
+			FROM = {
+				has_state_devastation = yes
+				impassable = no
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_large_city_state = yes
+					is_metropolis_state = yes
+					is_megalopolis_state = yes
+				}
+			}
+		}
+
+		visible = {
+			has_war = no
+			NOT = { has_country_flag = devastation_reconstruction_hidden }
+		}
+
+		available = {
+			has_war = no
+			num_of_civilian_factories_available_for_projects > 11
+			has_political_power > 99
+			FROM = {
+				has_state_devastation = yes
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 12
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -100
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				set_temp_variable = { temp = -6.0 }
+				devastation_state_change_value = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+
+			modifier = {
+				factor = 0
+				surrender_progress > 0.1
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 200
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 15
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					NOT = { is_core_of = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					NOT = { is_owned_and_controlled_by = ROOT }
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_stability < 0.5
+					has_war_support < 0.5
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					FROM = {
+						OR = {
+							industrial_complex > 5
+							arms_factory > 3
+							is_capital = yes
+						}
+					}
+				}
+			}
+
+			modifier = {
+				factor = 3
+				FROM = { is_capital = yes }
+			}
+			modifier = {
+				factor = 2
+				FROM = {
+					OR = {
+						industrial_complex > 8
+						arms_factory > 5
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				FROM = { check_variable = { state_devastation_value > 50 } }
+			}
+			modifier = {
+				factor = 2
+				FROM = { state_strategic_value > 12 }
+			}
+			modifier = {
+				factor = 1.5
+				num_of_civilian_factories_available_for_projects > 25
+			}
+			modifier = {
+				factor = 2
+				is_major = yes
+			}
+		}
+	}
+}
+
+assimilation_decisions = {
+	assimilation_passive_decision = {
+		icon = eng_trade_unions_support
+
+		available = {
+			any_controlled_state = {
+				has_unassimilated_pops = yes
+			}
+		}
+
+		days_remove = 60
+		
+		remove_effect = {
+			hidden_effect = {
+				if = {
+					limit = {
+						any_controlled_state = {
+							has_unassimilated_pops = yes
+						}
+					}
+					activate_decision = assimilation_passive_decision
+				}
+			}
+			set_temp_variable = { assimilate_unassimilated_pops_min = global.passive_assimilation_min }
+			set_temp_variable = { assimilate_unassimilated_pops_max = global.passive_assimilation_max }
+			custom_effect_tooltip = assimilation_passive_decision_tt
+			assimilate_unassimilated_pops = yes
+		}
+	}
+	
+	assimilation_nationwide_drive_decision = {
+		icon = generic_civil_support
+
+		available = {
+			any_controlled_state = {
+				has_unassimilated_pops = yes
+			}
+		}
+
+		ai_will_do = { 
+			factor = 30
+			
+			modifier = {
+				factor = 0
+				has_political_power < 200
+			}
+			
+			modifier = {
+				factor = 0
+				has_stability < 0.5
+			}
+			
+			modifier = {
+				factor = 0
+				has_war = yes
+				surrender_progress > 0.2
+			}
+			
+			modifier = {
+				factor = 2
+				any_controlled_state = {
+					has_unassimilated_pops = yes
+					is_core_of = ROOT
+					OR = {
+						industrial_complex > 5
+						arms_factory > 3
+					}
+				}
+			}
+		}
+	
+		cost = 50
+		days_remove = 60
+		
+		remove_effect = {
+			set_temp_variable = { assimilate_unassimilated_pops_min = global.nationwide_drive_assimilation_min }
+			set_temp_variable = { assimilate_unassimilated_pops_max = global.nationwide_drive_assimilation_max }
+			custom_effect_tooltip = assimilation_nationwide_drive_decision_tt
+			assimilate_unassimilated_pops = yes
+		}
+	}
+	
+	assimilation_expel_decision = {
+		icon = generic_assassination
+
+		available = {
+			any_controlled_state = {
+				has_unassimilated_pops = yes
+			}
+			set_temp_variable = { temp = global.unassimilated_expel_minimum_stability_factor }
+			less_than_unassimilated_stability_hit = yes
+			has_war = no
+		}
+
+		ai_will_do = { 
+			factor = 10
+			
+			modifier = {
+				factor = 0
+				has_political_power < 150
+			}
+			
+			modifier = {
+				factor = 0
+				has_stability < 0.6
+			}
+			
+			modifier = {
+				factor = 0
+				has_war_support < 0.5
+			}
+			
+			modifier = {
+				factor = 0
+				NOT = {
+					any_controlled_state = {
+						has_unassimilated_pops = yes
+						resistance > 30
+					}
+				}
+			}
+		}
+	
+		cost = 30
+		days_remove = 60
+		
+		remove_effect = {
+			set_temp_variable = { assimilate_expel_pops_min = global.expel_refugees_min }
+			set_temp_variable = { assimilate_expel_pops_max = global.expel_refugees_max }
+			custom_effect_tooltip = assimilation_expel_decision_tt
+			assimilate_expel_pops = yes
+		}
+	}
+}

@@ -1,0 +1,722 @@
+# =====================================================================
+# BETTER MECHANICS DEVASTATION — Decisions
+# =====================================================================
+# Warfare Conduct: 7 stances controlling military behavior toward civilians
+# Refugee Policy: 5 stances controlling how open the country is to refugees
+#
+# Mechanics:
+# - Each decision uses days_remove = -1 so it stays active permanently
+# - visible = always so active stance stays visible (greyed out = currently active)
+# - available = NOT { has_country_flag = bm_X_active } gates re-selection
+# - Dynamic modifiers applied/removed on complete_effect
+# - warfare_stance_civ_mult: multiplies occupation casualty formula
+# - warfare_stance_dev_mult: multiplies devastation gain in devastation_state_calc_value
+# - Opinion modifiers applied globally for aggressive stances
+# - One-time stability/war_support effects on complete_effect
+# =====================================================================
+
+bm_warfare_conduct_category = {
+
+	# ---------------------------------------------------------------
+	# STANCE 1: HUMANITARIAN CONDUCT (extreme pacifist)
+	# ---------------------------------------------------------------
+	bm_conduct_humanitarian = {
+		cost = 100
+		icon = GFX_decision_healthcare
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_humanitarian_active }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			opinion_gain_monthly_factor = 0.40
+			enemy_justify_war_goal_time = 0.40
+			resistance_growth_on_our_occupied_states = -0.05
+			resistance_decay_on_our_occupied_states = 0.05
+			compliance_growth = 0.10
+			political_power_gain = 0.10
+		}
+
+		complete_effect = {
+			remove_decision = bm_conduct_pacifist
+			remove_decision = bm_conduct_restrained
+			remove_decision = bm_conduct_standard
+			remove_decision = bm_conduct_aggressive
+			remove_decision = bm_conduct_total_war
+			remove_decision = bm_conduct_scorched_earth
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			add_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+			}
+			# One-time: generals resist, morale hits, but home front gains confidence
+			add_stability = 0.10
+			add_war_support = -0.20
+			set_variable = { warfare_stance_civ_mult = 0.25 }
+			set_variable = { warfare_stance_dev_mult = 0.70 }
+			set_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_total_war_active
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		remove_effect = {
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			clr_country_flag = bm_conduct_humanitarian_active
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# STANCE 2: PACIFIST CONDUCT
+	# ---------------------------------------------------------------
+	bm_conduct_pacifist = {
+		cost = 75
+		icon = GFX_decision_lebensborn
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_pacifist_active }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			opinion_gain_monthly_factor = 0.25
+			enemy_justify_war_goal_time = 0.20
+			resistance_growth_on_our_occupied_states = -0.03
+			resistance_decay_on_our_occupied_states = 0.03
+			compliance_growth = 0.05
+			political_power_gain = 0.05
+		}
+
+		complete_effect = {
+			remove_decision = bm_conduct_humanitarian
+			remove_decision = bm_conduct_restrained
+			remove_decision = bm_conduct_standard
+			remove_decision = bm_conduct_aggressive
+			remove_decision = bm_conduct_total_war
+			remove_decision = bm_conduct_scorched_earth
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			add_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+			}
+			# One-time: modest stability gain for principled stance
+			add_stability = 0.05
+			set_variable = { warfare_stance_civ_mult = 0.50 }
+			set_variable = { warfare_stance_dev_mult = 0.85 }
+			set_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_total_war_active
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		remove_effect = {
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			clr_country_flag = bm_conduct_pacifist_active
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# STANCE 3: RESTRAINED CONDUCT
+	# ---------------------------------------------------------------
+	bm_conduct_restrained = {
+		cost = 50
+		icon = generic_army_support
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_restrained_active }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			opinion_gain_monthly_factor = 0.10
+			enemy_justify_war_goal_time = 0.10
+			resistance_growth_on_our_occupied_states = -0.02
+			compliance_growth = 0.03
+		}
+
+		complete_effect = {
+			remove_decision = bm_conduct_humanitarian
+			remove_decision = bm_conduct_pacifist
+			remove_decision = bm_conduct_standard
+			remove_decision = bm_conduct_aggressive
+			remove_decision = bm_conduct_total_war
+			remove_decision = bm_conduct_scorched_earth
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			add_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+			}
+			set_variable = { warfare_stance_civ_mult = 0.75 }
+			set_variable = { warfare_stance_dev_mult = 0.90 }
+			set_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_total_war_active
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		remove_effect = {
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			clr_country_flag = bm_conduct_restrained_active
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# STANCE 4: STANDARD CONDUCT (default)
+	# ---------------------------------------------------------------
+	bm_conduct_standard = {
+		cost = 25
+		icon = GFX_decision_army_helmet
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_standard_active }
+		}
+
+		days_remove = -1
+
+		complete_effect = {
+			remove_decision = bm_conduct_humanitarian
+			remove_decision = bm_conduct_pacifist
+			remove_decision = bm_conduct_restrained
+			remove_decision = bm_conduct_aggressive
+			remove_decision = bm_conduct_total_war
+			remove_decision = bm_conduct_scorched_earth
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+			}
+			set_variable = { warfare_stance_civ_mult = 1.00 }
+			set_variable = { warfare_stance_dev_mult = 1.00 }
+			set_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_total_war_active
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		remove_effect = {
+			clr_country_flag = bm_conduct_standard_active
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# STANCE 5: AGGRESSIVE CONDUCT
+	# ---------------------------------------------------------------
+	bm_conduct_aggressive = {
+		cost = 35
+		icon = GFX_decision_army_sword
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_aggressive_active }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			opinion_gain_monthly_factor = -0.15
+			generate_wargoal_tension = -0.10
+			enemy_justify_war_goal_time = -0.10
+			resistance_growth_on_our_occupied_states = 0.03
+			resistance_decay_on_our_occupied_states = -0.02
+			compliance_growth = -0.05
+			political_power_gain = -0.05
+		}
+
+		complete_effect = {
+			remove_decision = bm_conduct_humanitarian
+			remove_decision = bm_conduct_pacifist
+			remove_decision = bm_conduct_restrained
+			remove_decision = bm_conduct_standard
+			remove_decision = bm_conduct_total_war
+			remove_decision = bm_conduct_scorched_earth
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			add_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+				add_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+			}
+			# One-time: troops slightly demotivated by aggressive orders
+			add_war_support = -0.05
+			set_variable = { warfare_stance_civ_mult = 1.25 }
+			set_variable = { warfare_stance_dev_mult = 1.15 }
+			set_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_total_war_active
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		remove_effect = {
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+			}
+			clr_country_flag = bm_conduct_aggressive_active
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# STANCE 6: TOTAL WAR CONDUCT
+	# ---------------------------------------------------------------
+	bm_conduct_total_war = {
+		cost = 60
+		icon = GFX_decision_ss_support
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_total_war_active }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			opinion_gain_monthly_factor = -0.30
+			generate_wargoal_tension = -0.20
+			enemy_justify_war_goal_time = -0.20
+			war_support_weekly = -0.010
+			resistance_growth_on_our_occupied_states = 0.06
+			resistance_decay_on_our_occupied_states = -0.04
+			compliance_growth = -0.10
+			justify_war_goal_time = -0.15
+			political_power_gain = -0.05
+		}
+
+		complete_effect = {
+			remove_decision = bm_conduct_humanitarian
+			remove_decision = bm_conduct_pacifist
+			remove_decision = bm_conduct_restrained
+			remove_decision = bm_conduct_standard
+			remove_decision = bm_conduct_aggressive
+			remove_decision = bm_conduct_scorched_earth
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			add_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+				add_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+			}
+			# One-time: mobilization de-energy + political cost
+			add_war_support = -0.10
+			add_stability = -0.05
+			set_variable = { warfare_stance_civ_mult = 1.50 }
+			set_variable = { warfare_stance_dev_mult = 1.30 }
+			set_country_flag = bm_conduct_total_war_active
+			clr_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		remove_effect = {
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+			}
+			clr_country_flag = bm_conduct_total_war_active
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# STANCE 7: SCORCHED EARTH (extreme brutal)
+	# ---------------------------------------------------------------
+	bm_conduct_scorched_earth = {
+		cost = 100
+		icon = GFX_decision_seize_jews
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			always = yes
+			NOT = { has_country_flag = bm_conduct_scorched_earth_active }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			opinion_gain_monthly_factor = -0.50
+			generate_wargoal_tension = -0.30
+			enemy_justify_war_goal_time = -0.40
+			war_support_weekly = -0.010
+			resistance_growth_on_our_occupied_states = 0.10
+			resistance_decay_on_our_occupied_states = -0.08
+			compliance_growth = -0.20
+			justify_war_goal_time = -0.25
+			political_power_gain = -0.10
+		}
+
+		complete_effect = {
+			remove_decision = bm_conduct_humanitarian
+			remove_decision = bm_conduct_pacifist
+			remove_decision = bm_conduct_restrained
+			remove_decision = bm_conduct_standard
+			remove_decision = bm_conduct_aggressive
+			remove_decision = bm_conduct_total_war
+			remove_dynamic_modifier = { modifier = bm_conduct_humanitarian_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_pacifist_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_restrained_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_aggressive_modifier }
+			remove_dynamic_modifier = { modifier = bm_conduct_total_war_modifier }
+			add_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_aggressive_opinion }
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_total_war_opinion }
+				add_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+			}
+			# One-time: extreme political cost to implement, short-term war support spike
+			add_war_support = -0.15
+			add_stability = -0.10
+			add_political_power = -30
+			set_variable = { warfare_stance_civ_mult = 2.00 }
+			set_variable = { warfare_stance_dev_mult = 1.60 }
+			set_country_flag = bm_conduct_scorched_earth_active
+			clr_country_flag = bm_conduct_humanitarian_active
+			clr_country_flag = bm_conduct_pacifist_active
+			clr_country_flag = bm_conduct_restrained_active
+			clr_country_flag = bm_conduct_standard_active
+			clr_country_flag = bm_conduct_aggressive_active
+			clr_country_flag = bm_conduct_total_war_active
+		}
+
+		remove_effect = {
+			remove_dynamic_modifier = { modifier = bm_conduct_scorched_earth_modifier }
+			every_other_country = {
+				remove_opinion_modifier = { target = ROOT modifier = bm_conduct_scorched_earth_opinion }
+			}
+			clr_country_flag = bm_conduct_scorched_earth_active
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+}
+
+bm_refugee_policy_category = {
+
+	# ---------------------------------------------------------------
+	# POLICY 1: OPEN DOOR
+	# ---------------------------------------------------------------
+	bm_refugees_open_door = {
+		cost = 50
+		icon = GFX_decision_SWI_dismiss_council
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			NOT = { has_country_flag = bm_refugees_open }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			weekly_manpower = -75
+			consumer_goods_factor = 0.05
+		}
+
+		complete_effect = {
+			remove_decision = bm_refugees_welcoming
+			remove_decision = bm_refugees_neutral
+			remove_decision = bm_refugees_discouraging
+			remove_decision = bm_refugees_closed_borders
+			# One-time: humanitarian reputation boosts home stability
+			add_stability = 0.05
+			set_country_flag = bm_refugees_open
+			clr_country_flag = bm_refugees_welcoming
+			clr_country_flag = bm_refugees_neutral
+			clr_country_flag = bm_refugees_discouraging
+			clr_country_flag = bm_refugees_closed
+		}
+
+		remove_effect = {
+			clr_country_flag = bm_refugees_open
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# POLICY 2: WELCOMING
+	# ---------------------------------------------------------------
+	bm_refugees_welcoming = {
+		cost = 30
+		icon = GFX_decision_agridec
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			NOT = { has_country_flag = bm_refugees_welcoming }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			weekly_manpower = -35
+			consumer_goods_factor = 0.025
+		}
+
+		complete_effect = {
+			remove_decision = bm_refugees_open_door
+			remove_decision = bm_refugees_neutral
+			remove_decision = bm_refugees_discouraging
+			remove_decision = bm_refugees_closed_borders
+			# One-time: modest goodwill
+			add_stability = 0.02
+			set_country_flag = bm_refugees_welcoming
+			clr_country_flag = bm_refugees_open
+			clr_country_flag = bm_refugees_neutral
+			clr_country_flag = bm_refugees_discouraging
+			clr_country_flag = bm_refugees_closed
+		}
+
+		remove_effect = {
+			clr_country_flag = bm_refugees_welcoming
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# POLICY 3: NEUTRAL (default)
+	# ---------------------------------------------------------------
+	bm_refugees_neutral = {
+		cost = 15
+		icon = GFX_decision_worker_icon
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			NOT = { has_country_flag = bm_refugees_neutral }
+		}
+
+		days_remove = -1
+
+		complete_effect = {
+			remove_decision = bm_refugees_open_door
+			remove_decision = bm_refugees_welcoming
+			remove_decision = bm_refugees_discouraging
+			remove_decision = bm_refugees_closed_borders
+			set_country_flag = bm_refugees_neutral
+			clr_country_flag = bm_refugees_open
+			clr_country_flag = bm_refugees_welcoming
+			clr_country_flag = bm_refugees_discouraging
+			clr_country_flag = bm_refugees_closed
+		}
+
+		remove_effect = {
+			clr_country_flag = bm_refugees_neutral
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# POLICY 4: DISCOURAGING
+	# ---------------------------------------------------------------
+	bm_refugees_discouraging = {
+		cost = 20
+		icon = GFX_decision_communism_support
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			NOT = { has_country_flag = bm_refugees_discouraging }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			political_power_gain = -0.10
+			resistance_growth_on_our_occupied_states = 0.02
+		}
+
+		complete_effect = {
+			remove_decision = bm_refugees_open_door
+			remove_decision = bm_refugees_welcoming
+			remove_decision = bm_refugees_neutral
+			remove_decision = bm_refugees_closed_borders
+			# One-time: visible suffering breeds domestic unrest
+			add_stability = -0.02
+			set_country_flag = bm_refugees_discouraging
+			clr_country_flag = bm_refugees_open
+			clr_country_flag = bm_refugees_welcoming
+			clr_country_flag = bm_refugees_neutral
+			clr_country_flag = bm_refugees_closed
+		}
+
+		remove_effect = {
+			clr_country_flag = bm_refugees_discouraging
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	# ---------------------------------------------------------------
+	# POLICY 5: CLOSED BORDERS
+	# ---------------------------------------------------------------
+	bm_refugees_closed_borders = {
+		cost = 40
+		icon = GFX_decision_jingoism
+
+		visible = {
+			always = yes
+		}
+
+		available = {
+			NOT = { has_country_flag = bm_refugees_closed }
+		}
+
+		days_remove = -1
+
+		modifier = {
+			political_power_gain = -0.20
+			opinion_gain_monthly_factor = -0.15
+			resistance_growth_on_our_occupied_states = 0.04
+		}
+
+		complete_effect = {
+			remove_decision = bm_refugees_open_door
+			remove_decision = bm_refugees_welcoming
+			remove_decision = bm_refugees_neutral
+			remove_decision = bm_refugees_discouraging
+			# One-time: international backlash + domestic unrest from visible refugees dying at border
+			add_stability = -0.05
+			add_war_support = -0.05
+			set_country_flag = bm_refugees_closed
+			clr_country_flag = bm_refugees_open
+			clr_country_flag = bm_refugees_welcoming
+			clr_country_flag = bm_refugees_neutral
+			clr_country_flag = bm_refugees_discouraging
+		}
+
+		remove_effect = {
+			clr_country_flag = bm_refugees_closed
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+}

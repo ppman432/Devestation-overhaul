@@ -1,0 +1,14 @@
+# =====================================================================
+# BETTER MECHANICS DEVASTATION — Opinion Modifiers
+# =====================================================================
+# Applied globally when aggressive stances are selected.
+# Modifiers persist until remove_opinion_modifier is called explicitly.
+# =====================================================================
+opinion_modifiers = {
+
+	bm_conduct_aggressive_opinion = { value = -30 }
+
+	bm_conduct_total_war_opinion = { value = -60 }
+
+	bm_conduct_scorched_earth_opinion = { value = -100 }
+}
