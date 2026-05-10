@@ -1,0 +1,236 @@
+spriteTypes = {	
+
+	### categories
+
+	spriteType = {
+		name = "GFX_decision_category_DDR_decisions"
+		texturefile = "gfx/interface/decisions/german_ddr_sepia_cat.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_category_FTF_fascist_decisions"
+		texturefile = "gfx/interface/decisions/nazi_cat_icon.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_category_FTF_ex_soviet"
+		texturefile = "gfx/interface/decisions/ussr_broken.dds"
+	}
+		
+			
+		
+				
+	### category pictures ###
+	
+	spriteType = {
+		name = "GFX_decision_cat_picture_ussr_ruins"
+		texturefile = "gfx/interface/decisions/decision_cat_ussr_ruins.dds"
+	}
+	
+	spriteType = {
+		name = "GFX_decision_cat_picture_freedom_lady"
+		texturefile = "gfx/interface/decisions/decisions_freedom_cat.dds"
+	}
+
+
+	### decision icons ###
+
+	spriteType = {
+		name = "GFX_decision_civilian_pixel"
+		texturefile = "gfx/interface/decisions/civilian_pixel_sepia.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_lebensborn"
+		texturefile = "gfx/interface/decisions/lebensborn.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_worker_icon"
+		texturefile = "gfx/interface/decisions/worker_icon.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_worker_shovel"
+		texturefile = "gfx/interface/decisions/worker_icon_2.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_industrial_elite"
+		texturefile = "gfx/interface/decisions/industrial_elite.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_monuments"
+		texturefile = "gfx/interface/decisions/monuments.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_seize_jews"
+		texturefile = "gfx/interface/decisions/raiding_jews.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_crimea"
+		texturefile = "gfx/interface/decisions/crimea_icon.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_rostov"
+		texturefile = "gfx/interface/decisions/Rostov.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_belgorod"
+		texturefile = "gfx/interface/decisions/Belgorod.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_kursk"
+		texturefile = "gfx/interface/decisions/kursk.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_bessarabia"
+		texturefile = "gfx/interface/decisions/moldova.dds"
+	}
+
+
+
+
+
+	spriteType = {
+		name = "GFX_decision_integrate_vilnius"
+		texturefile = "gfx/interface/decisions/Vilnius.dds"
+	}
+
+
+
+
+
+	spriteType = {
+		name = "GFX_decision_integrate_dagestan"
+		texturefile = "gfx/interface/decisions/dagestan.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_chechnya"
+		texturefile = "gfx/interface/decisions/chechnya.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_karbadino"
+		texturefile = "gfx/interface/decisions/karbadino.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_north_ossetia"
+		texturefile = "gfx/interface/decisions/north_ossetia.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_sochi"
+		texturefile = "gfx/interface/decisions/sochi.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_stavropol"
+		texturefile = "gfx/interface/decisions/stavropol.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_krasnodar"
+		texturefile = "gfx/interface/decisions/krasnodar.dds"
+	}
+
+
+
+
+	spriteType = {
+		name = "GFX_decision_integrate_leningrad"
+		texturefile = "gfx/interface/decisions/leningrad.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_integrate_karelia"
+		texturefile = "gfx/interface/decisions/karelia.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_agridec"
+		texturefile = "gfx/interface/decisions/agridec.dds"
+	}
+
+
+
+
+
+	### Democratic ###
+
+	spriteType = {
+		name = "GFX_decision_category_FTF_democratic_decisions"
+		texturefile = "gfx/interface/decisions/liberty_statue.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_ballot_box"
+		texturefile = "gfx/interface/decisions/ballot_box.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_ss_support"
+		texturefile = "gfx/interface/decisions/ss_support.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_army_sword"
+		texturefile = "gfx/interface/decisions/swords.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_bottles"
+		texturefile = "gfx/interface/decisions/bottles.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_jingoism"
+		texturefile = "gfx/interface/decisions/jingoism.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_communism_support"
+		texturefile = "gfx/interface/decisions/communism_support.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_healthcare"
+		texturefile = "gfx/interface/decisions/healthcare.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_education"
+		texturefile = "gfx/interface/decisions/education.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_free_trade"
+		texturefile = "gfx/interface/decisions/gas_barrel.dds"
+	}
+
+	spriteType = {
+		name = "GFX_decision_construction_act"
+		texturefile = "gfx/interface/decisions/construct_dec.dds"
+	}
+	
+	spriteType = {
+		name = "GFX_decision_army_helmet"
+		texturefile = "gfx/interface/decisions/stahl_helm.dds"
+	}
+	
+	spriteType = {
+		name = "GFX_decision_army_helmet_two"
+		texturefile = "gfx/interface/decisions/helmet_two.dds"
+	}
+
+
+}

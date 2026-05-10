@@ -1,0 +1,15 @@
+ 
+ spriteTypes = { 
+	##Icon For Raid Category
+	spriteType = {
+		name = "GFX_raid_category_small_devastation_strategic_bombing_category"
+		texturefile = "gfx/interface/military_raids/map_icons/raid_target_icon_massive_bombing_raid.dds"
+		noOfFrames = 1
+	}
+	
+	##Icon For: Raid Type
+	SpriteType = { 
+		name = "GFX_raid_target_icon_massive_bombing_raid"
+		texturefile = "gfx/interface/military_raids/map_icons/raid_target_icon_massive_bombing_raid.dds"
+	}
+ }
